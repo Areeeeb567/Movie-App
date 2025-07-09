@@ -8,20 +8,17 @@ const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
-
-// ✅ This is the correct way to use your router
 app.use('/api/auth', authRoutes);
-
-mongoose.connect('mongodb://localhost:27017/auth-demo')
-    .then(() => {
-        app.listen(5000, () => console.log("Server running on port 5000"));
-    });
 
 app.get('/', (req, res) => {
     res.send('API is working!');
 });
 
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// ✅ Only ONE app.listen call
+mongoose.connect('mongodb://localhost:27017/auth-demo')
+    .then(() => {
+        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    })
+    .catch(err => {
+        console.error("MongoDB connection error:", err);
+    });
