@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
     const refreshToken = generateRefreshToken(user._id.toString());
 
     // res.send('Logged in');
-    res.json({ accessToken });
+    res.json({ token: accessToken });
 
 });
 
@@ -46,12 +46,12 @@ export default router;
 // const router = express.Router();
 // const JWT_SECRET = 'your-secret';
 //
-// router.post('/register', async (req, res) => {
-//     const { email, password } = req.body;
-//     const user = new User({ email, password });
-//     await user.save();
-//     res.status(201).send("User registered");
-// });
+router.post('/register', async (req, res) => {
+    const { email, password } = req.body;
+    const user = new User({ email, password });
+    await user.save();
+    res.status(201).send("User registered");
+});
 //
 // router.post('/login', async (req, res) => {
 //     // login logic
