@@ -1,6 +1,7 @@
-// src/pages/Login.tsx
+// frontend/src/pages/Login.tsx
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import '../assets/Login.css';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -26,79 +27,57 @@ const Login = () => {
             const data = await res.json();
             localStorage.setItem('token', data.token);
             navigate('/dashboard');
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('An unexpected error occurred');
+            }
         }
     };
 
     return (
-        <div style={styles.container}>
-            <h2 style={styles.title}>Login</h2>
-            <form onSubmit={handleSubmit} style={styles.form}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    style={styles.input}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    style={styles.input}
-                    required
-                />
-                {error && <p style={styles.error}>{error}</p>}
-                <button type="submit" style={styles.button}>Login</button>
-            </form>
-            <p style={{ marginTop: 10 }}>
-                Don't have an account? <Link to="/register">Sign Up</Link>
-            </p>
+        <div className="login-container">
+            <div className="login-card">
+                <h2 className="login-title">Welcome Back</h2>
+                <p className="login-subtitle">Sign in to continue</p>
+
+                {error && <div className="error-container">
+                    <p className="error-message">{error}</p>
+                </div>}
+
+                <form onSubmit={handleSubmit} className="login-form">
+                    <div className="input-group">
+                        <label className="input-label">Email</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="input-field"
+                            required
+                        />
+                    </div>
+
+                    <div className="input-group">
+                        <label className="input-label">Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="input-field"
+                            required
+                        />
+                    </div>
+
+                    <button type="submit" className="login-button">Sign In</button>
+                </form>
+
+                <p className="login-footer">
+                    Don't have an account? <Link to="/register" className="login-link">Sign Up</Link>
+                </p>
+            </div>
         </div>
     );
-};
-
-const styles = {
-    container: {
-        maxWidth: 400,
-        margin: '100px auto',
-        padding: 30,
-        border: '1px solid #ccc',
-        borderRadius: 8,
-        textAlign: 'center' as const,
-        fontFamily: 'Arial, sans-serif'
-    },
-    title: {
-        marginBottom: 20,
-    },
-    form: {
-        display: 'flex',
-        flexDirection: 'column' as const,
-        gap: 15,
-    },
-    input: {
-        padding: 10,
-        fontSize: 16,
-        borderRadius: 4,
-        border: '1px solid #ccc',
-    },
-    button: {
-        padding: 10,
-        backgroundColor: '#4CAF50',
-        color: 'white',
-        fontWeight: 'bold' as const,
-        border: 'none',
-        borderRadius: 4,
-        cursor: 'pointer',
-    },
-    error: {
-        color: 'red',
-        fontSize: 14,
-        margin: 0,
-    },
 };
 
 export default Login;
