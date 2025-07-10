@@ -46,11 +46,16 @@ export default router;
 // const router = express.Router();
 // const JWT_SECRET = 'your-secret';
 //
+// backend/src/routes/auth.ts (update register route)
 router.post('/register', async (req, res) => {
-    const { email, password } = req.body;
-    const user = new User({ email, password });
-    await user.save();
-    res.status(201).send("User registered");
+    const { username, email, phoneNumber, password } = req.body;
+    try {
+        const user = new User({ username, email, phoneNumber, password });
+        await user.save();
+        res.status(201).send("User registered");
+    } catch (error) {
+        res.status(400).send("Registration failed");
+    }
 });
 //
 // router.post('/login', async (req, res) => {
