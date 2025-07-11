@@ -3,6 +3,7 @@ import User from '../models/User';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { generateAccessToken, generateRefreshToken } from '../utils/token';
+import {ERROR_MESSAGES, HTTP_STATUS} from "../constants/httpResponses";
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ router.post('/login', async (req, res) => {
 
     //  Incase user is not found or password is incorrect
     if (!user){
-        res.status(401).send("Invalid credentials");
+        res.status(HTTP_STATUS.UNAUTHORIZED).send(ERROR_MESSAGES.INVALID_CREDENTIALS);
         return;
     }
 
@@ -22,7 +23,7 @@ router.post('/login', async (req, res) => {
     if (user) {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch){
-            res.status(401).send("Invalid credentials");
+            res.status(HTTP_STATUS.UNAUTHORIZED).send(ERROR_MESSAGES.INVALID_CREDENTIALS);
             return;
         }
     }
@@ -42,9 +43,9 @@ router.post('/register', async (req, res) => {
     try {
         const user = new User({ username, email, phoneNumber, password });
         await user.save();
-        res.status(201).send("User registered");
+        res.status(HTTP_STATUS.REGISTERED).send(ERROR_MESSAGES.REGISTER_SUCCESSFUL);
     } catch (error) {
-        res.status(400).send("Registration failed");
+        res.status(HTTP_STATUS.BAD_REQUEST).send(ERROR_MESSAGES.REGISTER_FAILED);
     }
 });
 

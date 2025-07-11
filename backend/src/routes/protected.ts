@@ -2,6 +2,7 @@
 import express from 'express';
 import authMiddleware from '../middleware/auth';
 import User from '../models/User';
+import {ERROR_MESSAGES, HTTP_STATUS} from "../constants/httpResponses";
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
             user
         });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(HTTP_STATUS.SERVER_ERROR).json({ message: ERROR_MESSAGES.SERVER_ERROR });
     }
 });
 
