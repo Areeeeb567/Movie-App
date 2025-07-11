@@ -3,13 +3,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import '../assets/Dashboard.css';
+import type {User} from '../types/types';
 
-// Define the User interface to match the expected user data structure
-interface User {
-    username: string;
-    email: string;
-    phoneNumber: string;
-}
 
 // Dashboard component to display user information and a welcome message
 const Dashboard = () => {

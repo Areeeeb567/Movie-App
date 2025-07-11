@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../assets/Login.css';
+import { API_ENDPOINTS } from '../constants/apiUrls';
+
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -18,7 +20,7 @@ const Login = () => {
         // Validate email and password
         try {
             // Check if email and password are provided
-            const res = await fetch('http://localhost:5000/api/auth/login', {
+            const res = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
