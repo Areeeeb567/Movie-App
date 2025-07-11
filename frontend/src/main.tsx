@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import './assets/index.css';
 
+// Render the main application component wrapped in StrictMode and BrowserRouter
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>

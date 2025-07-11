@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../assets/Register.css';
 
+// This component handles user registration
 const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -11,11 +12,15 @@ const Register = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    // Function to handle form submission
     const handleSubmit = async (e: React.FormEvent) => {
+        // Prevent the default form submission behavior
         e.preventDefault();
         setError('');
 
+        // Validate input fields
         try {
+            // Check if all fields are filled
             const res = await fetch('http://localhost:5000/api/auth/register', {
                 method: 'POST',
                 headers: {
@@ -24,15 +29,21 @@ const Register = () => {
                 body: JSON.stringify({ username, email, phoneNumber, password }),
             });
 
+            // If the response is not ok, throw an error
             if (!res.ok) throw new Error('Registration failed');
 
-            // alert('Registration successful');
+            // Navigate to the login page after successful registration
             navigate('/login');
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('An unexpected error occurred');
+            }
         }
     };
 
+    // Render the registration form with username, email, phone number, and password fields
     return (
         <div className="register-container">
             <div className="register-card">

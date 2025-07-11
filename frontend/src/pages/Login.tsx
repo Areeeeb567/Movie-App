@@ -9,11 +9,15 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    // Function to handle form submission
     const handleSubmit = async (e: React.FormEvent) => {
+        // Prevent the default form submission behavior
         e.preventDefault();
         setError('');
 
+        // Validate email and password
         try {
+            // Check if email and password are provided
             const res = await fetch('http://localhost:5000/api/auth/login', {
                 method: 'POST',
                 headers: {
@@ -22,10 +26,14 @@ const Login = () => {
                 body: JSON.stringify({ email, password }),
             });
 
+            // If the response is not ok, throw an error
             if (!res.ok) throw new Error('Invalid email or password');
 
+            // Parse the response data and store the token in localStorage
             const data = await res.json();
             localStorage.setItem('token', data.token);
+
+            // Redirect to the dashboard after successful login
             navigate('/dashboard');
         } catch (err: unknown) {
             if (err instanceof Error) {
@@ -36,6 +44,7 @@ const Login = () => {
         }
     };
 
+    // Render the login form with email and password fields
     return (
         <div className="login-container">
             <div className="login-card">

@@ -4,19 +4,23 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import '../assets/Dashboard.css';
 
+// Define the User interface to match the expected user data structure
 interface User {
     username: string;
     email: string;
     phoneNumber: string;
 }
 
+// Dashboard component to display user information and a welcome message
 const Dashboard = () => {
     const [message, setMessage] = useState('');
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
+    // Fetch user data from the backend when the component mounts
     useEffect(() => {
+        // Check if the user is authenticated by verifying the token
         api.get('/dashboard')
             .then(res => {
                 setMessage(res.data.message);
@@ -30,11 +34,13 @@ const Dashboard = () => {
             });
     }, []);
 
+    // Handle user logout by removing the token and redirecting to the login page
     const handleLogout = () => {
         localStorage.removeItem('token');
         navigate('/login');
     };
 
+    // If the data is still loading, show a loading message
     if (loading) {
         return (
             <div className="dashboard-container">
@@ -43,6 +49,7 @@ const Dashboard = () => {
         );
     }
 
+    // Render the dashboard with user information and a logout button
     return (
         <div className="dashboard-container">
             <div className="dashboard-card">
