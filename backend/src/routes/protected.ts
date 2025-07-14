@@ -6,12 +6,16 @@ import {ERROR_MESSAGES, HTTP_STATUS} from "../constants/httpResponses";
 
 const router = express.Router();
 
-// This route is protected by the authMiddleware
+/**
+ * Protected route to demonstrate authentication
+ */
 router.get('/', authMiddleware, (req, res) => {
     res.send('This is a protected route');
 });
 
-// Dashboard route to get user information
+/**
+ * Dashboard route to get user information
+ */
 router.get('/dashboard', authMiddleware, async (req, res) => {
     try {
         const user = await User.findById((req as any).user.id).select('-password');

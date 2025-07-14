@@ -3,7 +3,12 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import {ERROR_MESSAGES, HTTP_STATUS } from '../constants/httpResponses';
 
-// Middleware to authenticate requests using JWT
+/**
+ * Middleware to authenticate requests using JWT
+ * @param req
+ * @param res
+ * @param next
+ */
 const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
     const authHeader = req.headers.authorization;
 

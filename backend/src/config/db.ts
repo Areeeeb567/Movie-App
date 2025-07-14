@@ -1,7 +1,9 @@
 // src/config/db.ts
 import mongoose from 'mongoose';
 
-//  Connect to MongoDB
+/**
+ * * Function to connect to MongoDB using Mongoose.
+ */
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI!);

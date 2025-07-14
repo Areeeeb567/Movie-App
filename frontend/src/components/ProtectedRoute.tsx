@@ -2,7 +2,11 @@
 import { Navigate } from 'react-router-dom';
 import type {JSX} from "react";
 
-// Checks the presence of a token in localStorage.
+/**
+ * ProtectedRoute component that checks for user authentication.
+ * @param children
+ * @constructor
+ */
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
     const token = localStorage.getItem('token');
 

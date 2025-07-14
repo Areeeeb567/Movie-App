@@ -2,16 +2,26 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../assets/Login.css';
-import { API_ENDPOINTS } from '../constants/apiUrls';
+import { loginUser } from '../services/api';
 
 
+/**
+ * Login component for user authentication.
+ * @constructor
+ */
 const Login = () => {
+    /**
+     * State variables for email, password, and error message.
+     */
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // Function to handle form submission
+    /**
+     * Handles the form submission for user login.
+     * @param e
+     */
     const handleSubmit = async (e: React.FormEvent) => {
         // Prevent the default form submission behavior
         e.preventDefault();
@@ -19,14 +29,7 @@ const Login = () => {
 
         // Validate email and password
         try {
-            // Check if email and password are provided
-            const res = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+            const res = await loginUser(email, password);
 
             // If the response is not ok, throw an error
             if (!res.ok) throw new Error('Invalid email or password');

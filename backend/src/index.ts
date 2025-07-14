@@ -1,3 +1,6 @@
+/**
+ * * * Entry point for the backend server
+ */
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -16,15 +19,21 @@ app.use('/api/auth', authRoutes);
 app.use(cookieParser());
 app.use('/api', protectedRoutes);
 
-// Basic route to check if the API is working
+/**
+ * * Basic route to check if the API is working
+ */
 app.get('/', (req, res) => {
     res.send('API is working!');
 });
 
-// Set the port from environment variable or default to 5000
+/**
+ * * * Port for the server to listen on
+ */
 const PORT = process.env.PORT || 5000;
 
-// Connect to the database and start the server
+/**
+ * * Function to connect to the database and start the server
+ */
 connectDB().then(() => {
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });

@@ -1,4 +1,8 @@
 // backend/src/constants/httpResponses.ts
+
+/**
+ * HTTP status codes and error messages used in the application.
+ */
 export const HTTP_STATUS = {
     OK: 200,
     REGISTERED: 201,
@@ -9,6 +13,9 @@ export const HTTP_STATUS = {
     SERVER_ERROR: 500
 };
 
+/**
+ * Error messages used in the application.
+ */
 export const ERROR_MESSAGES = {
     NO_TOKEN: 'No token provided',
     INVALID_TOKEN: 'Invalid token',

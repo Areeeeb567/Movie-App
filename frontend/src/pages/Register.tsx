@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../assets/Register.css';
-import { API_ENDPOINTS } from '../constants/apiUrls';
+import { registerUser } from '../services/api';
+
 
 // This component handles user registration
 const Register = () => {
@@ -21,14 +22,7 @@ const Register = () => {
 
         // Validate input fields
         try {
-            // Check if all fields are filled
-            const res = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, email, phoneNumber, password }),
-            });
+            const res = await registerUser(username, email, phoneNumber, password);
 
             // If the response is not ok, throw an error
             if (!res.ok) throw new Error('Registration failed');

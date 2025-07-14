@@ -8,7 +8,9 @@ import {ERROR_MESSAGES, HTTP_STATUS} from "../constants/httpResponses";
 const router = express.Router();
 
 // Middleware to check if the user is authenticated
-// Login route will handle user authentication
+/**
+ * Login route to authenticate user and generate JWT tokens
+ */
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -37,7 +39,9 @@ router.post('/login', async (req, res) => {
 
 });
 
-//  Register route to create a new user
+/**
+ * Register route to create a new user
+ */
 router.post('/register', async (req, res) => {
     const { username, email, phoneNumber, password } = req.body;
     try {
