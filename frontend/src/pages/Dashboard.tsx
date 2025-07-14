@@ -5,7 +5,6 @@ import api from '../services/api';
 import '../assets/Dashboard.css';
 import type {User} from '../types/types';
 
-
 // Dashboard component to display user information and a welcome message
 const Dashboard = () => {
     const [message, setMessage] = useState('');
