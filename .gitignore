@@ -5,3 +5,5 @@
 /backend/.env
 
 /backend/package-lock.json
+
+/backend/logs
