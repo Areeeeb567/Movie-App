@@ -1,11 +1,20 @@
+// backend/src/models/User.ts
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
+/**
+ * User schema for MongoDB using Mongoose
+ */
 const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
+    phoneNumber: { type: String, required: true },
     password: { type: String, required: true }
 });
 
+/**
+ * Method to compare passwords
+ */
 userSchema.pre('save', async function (next) {
     const user = this as any;
     if (!user.isModified('password')) return next();
