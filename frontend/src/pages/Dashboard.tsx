@@ -17,8 +17,8 @@ const Dashboard = () => {
         // Check if the user is authenticated by verifying the token
         api.get('/dashboard')
             .then(res => {
-                setMessage(res.data.message);
-                setUser(res.data.user);
+                setMessage('Welcome to your dashboard!');
+                setUser(res.data);
                 setLoading(false);
             })
             .catch(err => {

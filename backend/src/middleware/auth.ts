@@ -1,7 +1,7 @@
 // middleware/auth.ts
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import {ERROR_MESSAGES, HTTP_STATUS } from '../constants/httpResponses';
+import {ERROR_MESSAGES, HTTP_STATUS, sendResponse, sendErrorResponse } from '../constants/httpResponses';
 
 /**
  * Middleware to authenticate requests using JWT
@@ -14,7 +14,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction): void =
 
     // Check if the Authorization header is present and starts with 'Bearer '
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: ERROR_MESSAGES.NO_TOKEN });
+        sendErrorResponse(res, HTTP_STATUS.UNAUTHORIZED, ERROR_MESSAGES.NO_TOKEN);
         return;
     }
 
@@ -27,7 +27,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction): void =
         (req as any).user = decoded;
         next();
     } catch (error) {
-        res.status(HTTP_STATUS.FORBIDDEN).json({ message: ERROR_MESSAGES.INVALID_TOKEN });
+        sendErrorResponse(res, HTTP_STATUS.FORBIDDEN, ERROR_MESSAGES.INVALID_TOKEN);
     }
 };
 
