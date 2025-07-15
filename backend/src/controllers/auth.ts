@@ -1,7 +1,6 @@
 import express from 'express';
 import User from '../models/User';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import { generateAccessToken, generateRefreshToken } from '../utils/token';
 import {ERROR_MESSAGES, HTTP_STATUS} from "../constants/httpResponses";
 import { sendResponse, sendErrorResponse, jsonResponse } from '../constants/httpResponses';
