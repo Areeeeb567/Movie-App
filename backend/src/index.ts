@@ -25,7 +25,6 @@ app.use('/api', protectedRoutes);
  * * Basic route to check if the API is working
  */
 app.get('/', (req, res) => {
-    // res.send('API is working!');
     sendErrorResponse(res, HTTP_STATUS.OK, 'API is working!');
 });
 
