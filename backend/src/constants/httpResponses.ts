@@ -24,6 +24,7 @@ export const ERROR_MESSAGES = {
     INVALID_CREDENTIALS: 'Invalid credentials',
     REGISTER_SUCCESSFUL: 'User registered successfully',
     REGISTER_FAILED: 'Registration failed',
+    ERROR_FETCHING_MOVIES: 'Error fetching movie details:'
 };
 
 /**
@@ -69,5 +70,5 @@ export const sendErrorResponse = (
  * @returns The Express response object
  */
 export const jsonResponse = <T>(res: Response, data: T) => {
-    return res.json(data);
+    return res.status(HTTP_STATUS.OK).json(data);
 };
