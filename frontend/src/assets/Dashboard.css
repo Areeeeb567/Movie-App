@@ -1,0 +1,104 @@
+/* frontend/src/assets/Dashboard.css */
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1e293b;
+    font-family: Arial, sans-serif;
+}
+
+.dashboard-card {
+    width: 100%;
+    max-width: 600px;
+    padding: 40px 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+    color: #334155;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.dashboard-welcome {
+    font-size: 18px;
+    color: #64748b;
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.dashboard-loading {
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.user-info-container {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 1px solid #e2e8f0;
+}
+
+.user-info-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #334155;
+    text-align: center;
+}
+
+.user-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.user-info-item:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #475569;
+    font-size: 16px;
+}
+
+.info-value {
+    color: #1e293b;
+    font-size: 16px;
+}
+
+.logout-button {
+    padding: 14px;
+    width: 100%;
+    background-color: #8b5cf6;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+    background-color: #7c3aed;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+}
+
+.logout-button:active {
+    transform: translateY(0);
+}
