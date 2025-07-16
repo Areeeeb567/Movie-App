@@ -7,7 +7,6 @@ import { sendResponse, sendErrorResponse, jsonResponse } from '../constants/http
 
 const router = express.Router();
 
-// Middleware to check if the user is authenticated
 /**
  * Login route to authenticate user and generate JWT tokens
  */
@@ -17,7 +16,6 @@ router.post('/login', async (req, res) => {
 
     //  Incase user is not found or password is incorrect
     if (!user){
-        // res.status(HTTP_STATUS.UNAUTHORIZED).send(ERROR_MESSAGES.INVALID_CREDENTIALS);
         sendErrorResponse(res, HTTP_STATUS.UNAUTHORIZED, ERROR_MESSAGES.INVALID_CREDENTIALS);
         return;
     }
@@ -37,7 +35,6 @@ router.post('/login', async (req, res) => {
     const refreshToken = generateRefreshToken(user._id.toString());
 
     jsonResponse(res, { token: accessToken });
-    // sendResponse(res, HTTP_STATUS.OK, { token: accessToken });
 
 });
 

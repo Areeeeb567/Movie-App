@@ -12,13 +12,15 @@ import connectDB from './config/db';
 import protectedRoutes from './routes/protected';
 import { logger } from './config/logger';
 import { sendErrorResponse, HTTP_STATUS } from './constants/httpResponses';
+import movieRoutes from './routes/movie';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/api/auth', authRoutes);
 app.use(cookieParser());
+app.use('/api/auth', authRoutes);
+app.use('/api/movies', movieRoutes);
 app.use('/api', protectedRoutes);
 
 /**

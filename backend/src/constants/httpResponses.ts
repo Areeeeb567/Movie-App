@@ -55,9 +55,10 @@ export const sendResponse = (
 export const sendErrorResponse = (
     res: Response,
     statusCode: number = HTTP_STATUS.SERVER_ERROR,
-    message: string = ERROR_MESSAGES.SERVER_ERROR
+    message: string = ERROR_MESSAGES.SERVER_ERROR,
+    success: boolean = false
 ) => {
-    return sendResponse(res, statusCode, message, false);
+    return sendResponse(res, statusCode, message, success);
 };
 
 /**
