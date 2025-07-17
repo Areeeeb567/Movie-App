@@ -7,28 +7,32 @@ import {ERROR_MESSAGES, HTTP_STATUS, jsonResponse, sendErrorResponse} from "../c
  */
 
 /**
- * Fetch top-rated movies from TMDB API
+ * Discover movies based on genres and sorting options using TMDB API
  * @param req
  * @param res
- * @return Json response with top-rated movies or error message
+ * @return Json response with discovered movies or error message
  */
-export const getTopRatedMovies = async (req: Request, res: Response): Promise<void> => {
-    const {page = 1} = req.query;
+export const discoverMovies = async (req: Request, res: Response): Promise<void> => {
+    const { genres, sort_by = 'popularity.desc', page = 1 } = req.query;
 
     try {
-        const response = await axios.get(`${process.env.TMDB_BASE_URL}/movie/${movieId}`, {
+        const response = await axios.get(`${process.env.TMDB_BASE_URL}/discover/movie`, {
             params: {
                 api_key: process.env.TMDB_API_KEY,
-                language: 'en-US'
-            }
+                language: 'en-US',
+                with_genres: genres,
+                sort_by: sort_by,
+                page: page,
+            },
         });
+
         jsonResponse(res, response.data);
-    }
-    catch (error) {
+    } catch (error) {
+        console.error('Error fetching discovered movies:', error);
         sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, ERROR_MESSAGES.ERROR_FETCHING_MOVIES, false);
     }
 };
-
+  
 /**
  * Search for movies using TMDB API
  * @param req
@@ -45,20 +49,20 @@ export const searchMovies = async (req: Request, res: Response): Promise<void> =
     }
 
     try {
-        const response = await axios.get(`${process.env.TMDB_BASE_URL}/movie/top_rated`, {
+        const response = await axios.get(`${process.env.TMDB_BASE_URL}/search/movie`, {
             params: {
                 api_key: process.env.TMDB_API_KEY,
-                language: 'en-US',
+                query: query,
                 page: page,
             },
         });
 
         jsonResponse(res, response.data);
-    }
-    catch (error){
+    } catch (error) {
         sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, ERROR_MESSAGES.ERROR_FETCHING_MOVIES, false);
     }
 };
+  
 /**
  * Fetch upcoming movies from TMDB API
  * @param req
@@ -82,7 +86,31 @@ export const getNowPlaying = async (req: Request, res: Response): Promise<void> 
         sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, ERROR_MESSAGES.ERROR_FETCHING_MOVIES, false);
     }
 };
+  
+/**
+ * Fetch top-rated movies from TMDB API
+ * @param req
+ * @param res
+ * @return Json response with top-rated movies or error message
+ */
+export const getTopRatedMovies = async (req: Request, res: Response): Promise<void> => {
+    const {page = 1} = req.query;
+    try {
+        const response = await axios.get(`${process.env.TMDB_BASE_URL}/movie/top_rated`, {
+            params: {
+                api_key: process.env.TMDB_API_KEY,
+                language: 'en-US',
+                page: page,
+            },
+        });
 
+        jsonResponse(res, response.data);
+    }
+    catch (error){
+        sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, ERROR_MESSAGES.ERROR_FETCHING_MOVIES, false);
+    }
+};
+  
 /**
  * Fetch movie details from TMDB API
  * @param req
