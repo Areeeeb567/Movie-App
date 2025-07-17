@@ -40,7 +40,7 @@ export const searchMovies = async (req: Request, res: Response): Promise<void> =
 
     // In case of no query
     if (!query) {
-        sendErrorResponse(res, HTTP_STATUS.BAD_REQUEST, 'Query parameter is required and must be a string');
+        sendErrorResponse(res, HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.NO_QUERY, false);
         return;
     }
 
