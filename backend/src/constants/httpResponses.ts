@@ -24,7 +24,8 @@ export const ERROR_MESSAGES = {
     INVALID_CREDENTIALS: 'Invalid credentials',
     REGISTER_SUCCESSFUL: 'User registered successfully',
     REGISTER_FAILED: 'Registration failed',
-    ERROR_FETCHING_MOVIES: 'Error fetching movie details:'
+    ERROR_FETCHING_MOVIES: 'Error fetching movie details:',
+    NO_QUERY: 'Query parameter is required and must be a string',
 };
 
 /**
