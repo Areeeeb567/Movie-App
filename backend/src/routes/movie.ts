@@ -1,5 +1,5 @@
 import express from 'express';
-import { getTopRatedMovies, getNowPlaying } from '../controllers/tmdb';
+import { getTopRatedMovies, getNowPlaying, getPopularMovies, searchMovies, getMovieDetails } from '../controllers/tmdb';
 
 const router = express.Router();
 
@@ -18,12 +18,20 @@ router.get('/top_rated', getTopRatedMovies);
 router.get('/now_playing', getNowPlaying);
 
 /**
+ * Route to get popular movies
+ * @route GET /api/movies/popular
+ * @queryParam {number} [page=1] - The page number for pagination
+ */
+router.get('/popular', getPopularMovies);
+
+/**
  * Route to search for movies
  * @route GET /api/movies/search
  * @queryParam {string} query - The search query for movies
  * @queryParam {number} [page=1] - The page number for pagination
  */
 router.get('/search', searchMovies);
+
 /**
  * Route to get movie details by ID
  * @route GET /api/movies/:movieId
