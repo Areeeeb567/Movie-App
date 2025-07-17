@@ -24,6 +24,8 @@ export const ERROR_MESSAGES = {
     INVALID_CREDENTIALS: 'Invalid credentials',
     REGISTER_SUCCESSFUL: 'User registered successfully',
     REGISTER_FAILED: 'Registration failed',
+    ERROR_FETCHING_MOVIES: 'Error fetching movie details:',
+    NO_QUERY: 'Query parameter is required and must be a string',
 };
 
 /**
@@ -55,9 +57,10 @@ export const sendResponse = (
 export const sendErrorResponse = (
     res: Response,
     statusCode: number = HTTP_STATUS.SERVER_ERROR,
-    message: string = ERROR_MESSAGES.SERVER_ERROR
+    message: string = ERROR_MESSAGES.SERVER_ERROR,
+    success: boolean = false
 ) => {
-    return sendResponse(res, statusCode, message, false);
+    return sendResponse(res, statusCode, message, success);
 };
 
 /**
@@ -68,5 +71,5 @@ export const sendErrorResponse = (
  * @returns The Express response object
  */
 export const jsonResponse = <T>(res: Response, data: T) => {
-    return res.json(data);
+    return res.status(HTTP_STATUS.OK).json(data);
 };
