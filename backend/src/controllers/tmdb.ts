@@ -7,6 +7,27 @@ import {ERROR_MESSAGES, HTTP_STATUS, jsonResponse, sendErrorResponse} from "../c
  */
 
 /**
+ * Fetch movie genres from TMDB API
+ * @param req
+ * @param res
+ * @return Json response with genres or error message
+ */
+export const getGenres = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const response = await axios.get(`${process.env.TMDB_BASE_URL}/genre/movie/list`, {
+            params: {
+                api_key: process.env.TMDB_API_KEY,
+                language: 'en-US',
+            },
+        });
+
+        jsonResponse(res, response.data.genres);
+    } catch (error) {
+        sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, ERROR_MESSAGES.ERROR_FETCHING_MOVIES, false);
+    }
+};
+
+/**
  * Discover movies based on genres and sorting options using TMDB API
  * @param req
  * @param res
