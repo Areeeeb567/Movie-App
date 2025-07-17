@@ -7,13 +7,13 @@ import {ERROR_MESSAGES, HTTP_STATUS, jsonResponse, sendErrorResponse} from "../c
  */
 
 /**
- * Fetch movie details from TMDB API
+ * Fetch top-rated movies from TMDB API
  * @param req
  * @param res
- * @return Json response with movie details or error message
+ * @return Json response with top-rated movies or error message
  */
-export const getMovieDetails = async (req: Request, res: Response): Promise<void> => {
-    const { movieId } = req.params;
+export const getTopRatedMovies = async (req: Request, res: Response): Promise<void> => {
+    const {page = 1} = req.query;
 
     try {
         const response = await axios.get(`${process.env.TMDB_BASE_URL}/movie/${movieId}`, {
@@ -45,16 +45,17 @@ export const searchMovies = async (req: Request, res: Response): Promise<void> =
     }
 
     try {
-        const response = await axios.get(`${process.env.TMDB_BASE_URL}/search/movie`, {
+        const response = await axios.get(`${process.env.TMDB_BASE_URL}/movie/top_rated`, {
             params: {
                 api_key: process.env.TMDB_API_KEY,
-                query: query,
+                language: 'en-US',
                 page: page,
             },
         });
 
         jsonResponse(res, response.data);
-    } catch (error) {
+    }
+    catch (error){
         sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, ERROR_MESSAGES.ERROR_FETCHING_MOVIES, false);
     }
 };
@@ -78,6 +79,29 @@ export const getNowPlaying = async (req: Request, res: Response): Promise<void> 
 
         jsonResponse(res, response.data);
     } catch (error) {
+        sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, ERROR_MESSAGES.ERROR_FETCHING_MOVIES, false);
+    }
+};
+
+/**
+ * Fetch movie details from TMDB API
+ * @param req
+ * @param res
+ * @return Json response with movie details or error message
+ */
+export const getMovieDetails = async (req: Request, res: Response): Promise<void> => {
+    const { movieId } = req.params;
+
+    try {
+        const response = await axios.get(`${process.env.TMDB_BASE_URL}/movie/${movieId}`, {
+            params: {
+                api_key: process.env.TMDB_API_KEY,
+                language: 'en-US'
+            }
+        });
+        jsonResponse(res, response.data);
+    }
+    catch (error) {
         sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, ERROR_MESSAGES.ERROR_FETCHING_MOVIES, false);
     }
 };
