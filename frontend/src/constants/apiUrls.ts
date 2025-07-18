@@ -13,5 +13,10 @@ export const API_ENDPOINTS = {
         LOGIN: `${API_BASE_URL}/auth/login`,
         REGISTER: `${API_BASE_URL}/auth/register`
     },
-    DASHBOARD: `${API_BASE_URL}/dashboard`
+    DASHBOARD: `${API_BASE_URL}/dashboard`,
+    MOVIES: {
+        LIST: `${API_BASE_URL}/movies`,
+        DETAILS: (movieId: string) => `${API_BASE_URL}/movies/${movieId}`,
+        SEARCH: (query: string) => `${API_BASE_URL}/movies/search?query=${encodeURIComponent(query)}`
+    },
 };
