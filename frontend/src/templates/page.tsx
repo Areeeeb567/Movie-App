@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box } from '@mui/material';
-import Navbar from '../components/navbar/navbar';
+import { Container} from '@mui/material';
 import Header from '../components/organisms/header/header';
+import Navbar from '../components/navbar/navbar';
 
 type PageProps = {
     children?: React.ReactNode;
@@ -9,23 +9,25 @@ type PageProps = {
 
 const Page: React.FC<PageProps> = ({ children }) => {
     return (
-        <Box sx={{ display: 'flex' }}>
+        <>
             <Header />
             <Navbar />
-            <Box
+            <Container
                 component="main"
                 sx={{
-                    flexGrow: 1,
-                    p: 3,
-                    minHeight: '100vh',
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    overflowX: 'auto',
+                    overflowY: 'auto',
+                    position: 'relative',
                     color: 'white',
                 }}
             >
-                <Navbar />
                 {children}
-            </Box>
-        </Box>
+            </Container>
+        </>
     );
 };
+
 
 export default Page;

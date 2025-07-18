@@ -17,6 +17,12 @@ export const API_ENDPOINTS = {
     MOVIES: {
         LIST: `${API_BASE_URL}/movies`,
         DETAILS: (movieId: string) => `${API_BASE_URL}/movies/${movieId}`,
-        SEARCH: (query: string) => `${API_BASE_URL}/movies/search?query=${encodeURIComponent(query)}`
+        SEARCH: (query: string) => `${API_BASE_URL}/movies/search?query=${encodeURIComponent(query)}`,
+        TRENDING: `${API_BASE_URL}/movies/trending`,
+        NOW_PLAYING: `${API_BASE_URL}/movies/now_playing`,
+        TOP_RATED: `${API_BASE_URL}/movies/top_rated`,
+        POPULAR: `${API_BASE_URL}/movies/popular`,
+        DISCOVER: (sortBy: string = 'popularity.desc', page: number = 1) =>
+            `${API_BASE_URL}/movies/discover?sort_by=${encodeURIComponent(sortBy)}&page=${page}`,
     },
 };
