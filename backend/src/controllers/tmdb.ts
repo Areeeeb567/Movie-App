@@ -162,7 +162,7 @@ export const getMovieDetails = async (req: Request, res: Response): Promise<void
     const { movieId } = req.params;
 
     try {
-        const response = await axios.get(`${process.env.TMDB_BASE_URL}/movie/${movieId}`, {
+        const response = await axios.get(`${process.env.TMDB_BASE_URL}/movie/${movieId}?append_to_response=credits`, {
             params: {
                 api_key: process.env.TMDB_API_KEY,
                 language: 'en-US'
