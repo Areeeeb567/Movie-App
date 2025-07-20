@@ -1,8 +1,6 @@
-// src/components/organisms/movieRow/MovieRow.tsx
-
 import React, { useEffect, useState } from 'react';
-import { Box, Typography } from '@mui/material';
-import MovieCard from '../../card/card'; // Adjusted path
+import { Box, Typography, Skeleton } from '@mui/material';
+import MovieCard from '../../card/card';
 
 interface Movie {
     id: number;
@@ -17,6 +15,7 @@ interface MovieRowProps {
 
 const MovieRow: React.FC<MovieRowProps> = ({ title, fetchFunction }) => {
     const [movies, setMovies] = useState<Movie[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,6 +24,8 @@ const MovieRow: React.FC<MovieRowProps> = ({ title, fetchFunction }) => {
                 setMovies(response.results || []);
             } catch (err) {
                 console.error(`Failed to fetch movies for ${title}`, err);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -40,32 +41,56 @@ const MovieRow: React.FC<MovieRowProps> = ({ title, fetchFunction }) => {
                 sx={{
                     display: 'flex',
                     overflowX: 'auto',
-                    gap: 2,
+                    gap: 5,
                     px: 1,
                     pb: 1,
-                    '&::-webkit-scrollbar': { height: '8px' },
-                    '&::-webkit-scrollbar-thumb': {
-                        backgroundColor: '#555',
-                        borderRadius: '4px',
-                    },
                     scrollBehavior: 'smooth',
+
+                    // Hide scrollbar cross-browser
+                    scrollbarWidth: 'none', // Firefox
+                    msOverflowStyle: 'none', // IE/Edge
+                    '&::-webkit-scrollbar': {
+                        display: 'none', // Chrome/Safari
+                    },
                 }}
             >
-                {movies.map((movie) => (
-                    <Box
-                        key={movie.id}
-                        sx={{
-                            flex: '0 0 auto',
-                            width: 160,
-                        }}
-                    >
-                        <MovieCard
-                            id={movie.id}
-                            title={movie.title}
-                            posterPath={movie.poster_path}
-                        />
-                    </Box>
-                ))}
+                {loading
+                    ? Array.from({ length: 6 }).map((_, index) => (
+                        <Box
+                            key={index}
+                            sx={{
+                                flex: '0 0 auto',
+                                width: 160,
+                            }}
+                        >
+                            <Skeleton
+                                variant="rectangular"
+                                width={160}
+                                height={240}
+                                sx={{ borderRadius: 2 }}
+                            />
+                            <Skeleton
+                                variant="text"
+                                width="100%"
+                                sx={{ mt: 1 }}
+                            />
+                        </Box>
+                    ))
+                    : movies.map((movie) => (
+                        <Box
+                            key={movie.id}
+                            sx={{
+                                flex: '0 0 auto',
+                                width: 160,
+                            }}
+                        >
+                            <MovieCard
+                                id={movie.id}
+                                title={movie.title}
+                                posterPath={movie.poster_path}
+                            />
+                        </Box>
+                    ))}
             </Box>
         </Box>
     );
