@@ -1,7 +1,8 @@
 // src/components/MovieCard.tsx
 import React from 'react';
-import { Card, CardContent, CardMedia, Tooltip, Typography } from '@mui/material';
+import {Box, Card, CardContent, CardMedia, Tooltip, Typography} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import {API_ENDPOINTS} from "../../constants/apiUrls.ts";
 
 interface MovieCardProps {
     id: number;
@@ -14,28 +15,39 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, posterPath }) => {
 
     return (
         <Card
+            elevation={0}
             sx={{
                 cursor: 'pointer',
                 height: '100%',
-                '&:hover': {
-                    transform: 'scale(1.03)',
-                    transition: 'transform 0.2s',
-                },
+                width: 180,
+                overflow: 'hidden',
+                background: 'transparent',
             }}
             onClick={() => navigate(`/movie/${id}`)}
         >
-            <CardMedia
-                component="img"
-                image={`https://image.tmdb.org/t/p/w500${posterPath}`}
-                alt={title}
-                sx={{
-                    height: 300,
-                    objectFit: 'cover',
-                }}
-            />
-            <CardContent sx={{ textAlign: 'center', px: 1, py: 1 }}>
+            <Box>
+                <CardMedia
+                    component="img"
+                    image={`${API_ENDPOINTS.MOVIES.POSTER_IMAGE}${posterPath}`}
+                    alt={title}
+                    sx={{
+                        paddingTop: 2,
+                        height: 270,
+                        objectFit: 'cover',
+                        transition: 'transform 0.3s ease',
+                        '&:hover': {
+                            transform: 'scale(1.05)',
+                        },
+                    }}
+                />
+            </Box>
+
+            <CardContent sx={{ textAlign: 'center', px: 1, py: 2 }}>
                 <Tooltip title={title}>
-                    <Typography variant="subtitle2" noWrap sx={{ fontWeight: 'bold' }}>
+                    <Typography
+                        variant="subtitle2"
+                        noWrap
+                    >
                         {title}
                     </Typography>
                 </Tooltip>
