@@ -15,8 +15,8 @@ import ExploreIcon from '@mui/icons-material/Explore';
 const drawerWidth = 72;
 
 const navItems = [
-    { icon: <HomeIcon />, label: 'Home', route: '/' },
-    { icon: <ExploreIcon />, label: 'Discover', route: '/trending' },
+    { icon: <HomeIcon sx={{fontSize: 30}}/>, label: 'Home', route: '/' },
+    { icon: <ExploreIcon sx={{fontSize: 30}} />, label: 'Discover', route: '/discover' },
 ];
 
 const Navbar: React.FC = () => {
