@@ -48,3 +48,40 @@ export interface MovieRowProps {
     title: string;
     fetchFunction: (page: number) => Promise<MovieApiResponse>;
 }
+
+
+/**
+ * Interface for Movie Genre
+ */
+export interface Genre {
+    id: number;
+    name: string;
+}
+
+/**
+ * Interface for Cast Member
+ */
+export interface CastMember {
+    id: number;
+    name: string;
+    profile_path: string;
+}
+
+/**
+ * Interface for MovieDetails component props.
+ */
+export interface MovieDetails {
+    id: number;
+    title: string;
+    overview: string;
+    release_date: string;
+    backdrop_path: string;
+    genres?: Genre[];
+    runtime: number;
+    vote_average: number;
+    tagline: string;
+    adult: boolean;
+    credits?: {
+        cast: CastMember[];
+    };
+}
