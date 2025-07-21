@@ -9,6 +9,9 @@ const api = axios.create({
     baseURL: API_BASE_URL,
 });
 
+/**
+ * Interceptor to add the Authorization header with the token if it exists.
+ */
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
     if (token) config.headers.Authorization = `Bearer ${token}`;
