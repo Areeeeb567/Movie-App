@@ -7,6 +7,10 @@ export const getMovieById = async (movieId: string): Promise<MovieDetails> => {
     return response.data;
 };
 
+/**
+ * Fetch Trending movies from the API.
+ * @param page
+ */
 export const getTrending = async (page: number = 1): Promise<any> => {
     const response = await axios.get(API_ENDPOINTS.MOVIES.TRENDING, {
         params: { page }
@@ -14,6 +18,10 @@ export const getTrending = async (page: number = 1): Promise<any> => {
     return response.data;
 }
 
+/**
+ * Fetch Now Playing movies from the API.
+ * @param page
+ */
 export const getNowPlaying = async (page: number = 1): Promise<any> => {
     const response = await axios.get(API_ENDPOINTS.MOVIES.NOW_PLAYING, {
         params: { page }
@@ -21,6 +29,10 @@ export const getNowPlaying = async (page: number = 1): Promise<any> => {
     return response.data;
 };
 
+/**
+ * Fetch Top Rated movies from the API.
+ * @param page
+ */
 export const getTopRated = async (page: number = 1): Promise<any> => {
     const response = await axios.get(API_ENDPOINTS.MOVIES.TOP_RATED, {
         params: { page }
@@ -28,6 +40,9 @@ export const getTopRated = async (page: number = 1): Promise<any> => {
     return response.data;
 };
 
+/**
+ * Fetch Popular Movies from the API.
+ */
 export const getPopular = async (page: number = 1): Promise<any> => {
     const response = await axios.get(API_ENDPOINTS.MOVIES.POPULAR, {
         params: { page }
