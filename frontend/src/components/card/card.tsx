@@ -3,13 +3,15 @@ import React from 'react';
 import {Box, Card, CardContent, CardMedia, Tooltip, Typography} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import {API_ENDPOINTS} from "../../constants/apiUrls.ts";
+import type {MovieCardProps} from "../../types/types.ts";
 
-interface MovieCardProps {
-    id: number;
-    title: string;
-    posterPath: string;
-}
-
+/**
+ * MovieCard component that displays a movie card with title and poster.
+ * @param id
+ * @param title
+ * @param posterPath
+ * @constructor
+ */
 const MovieCard: React.FC<MovieCardProps> = ({ id, title, posterPath }) => {
     const navigate = useNavigate();
 

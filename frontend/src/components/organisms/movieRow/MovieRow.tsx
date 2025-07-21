@@ -1,25 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Skeleton, Button } from '@mui/material';
 import MovieCard from '../../card/card';
+import type {Movie, MovieRowProps} from "../../../types/types.ts";
 
-interface Movie {
-    id: number;
-    title: string;
-    poster_path: string;
-}
-
-interface MovieApiResponse {
-    page: number;
-    results: Movie[];
-    total_pages: number;
-    total_results: number;
-}
-
-interface MovieRowProps {
-    title: string;
-    fetchFunction: (page: number) => Promise<MovieApiResponse>;
-}
-
+/**
+ * MovieRow component that displays a row of movie cards.
+ * @param title
+ * @param fetchFunction
+ * @constructor
+ */
 const MovieRow: React.FC<MovieRowProps> = ({ title, fetchFunction }) => {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [page, setPage] = useState(1);

@@ -21,3 +21,30 @@ export interface MovieCardProps {
     title: string;
     posterPath: string;
 }
+
+/**
+ * Interface for movie data fetched from the API.
+ */
+export interface Movie {
+    id: number;
+    title: string;
+    poster_path: string;
+}
+
+/**
+ * Interface for the API response containing a list of movies.
+ */
+export interface MovieApiResponse {
+    page: number;
+    results: Movie[];
+    total_pages: number;
+    total_results: number;
+}
+
+/**
+ * Interface for the MovieRow component props.
+ */
+export interface MovieRowProps {
+    title: string;
+    fetchFunction: (page: number) => Promise<MovieApiResponse>;
+}
