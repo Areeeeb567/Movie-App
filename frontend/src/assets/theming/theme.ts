@@ -1,5 +1,8 @@
 import { createTheme } from '@mui/material/styles';
 
+/**
+ * Theme configuration for the application.
+ */
 const theme = createTheme({
     palette: {
         mode: 'dark',
@@ -22,13 +25,12 @@ const theme = createTheme({
             styleOverrides: {
                 body: {
                     margin: 0,
-                    paddingTop: '64px', // Adjust for fixed header height
+                    paddingTop: '64px',
                     background: 'linear-gradient(135deg, #0a0a0f 0%, #1c0b2e 50%, #2a0e4f 100%)',
                     backgroundAttachment: 'fixed',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
-                    color: '#fff',
                     overflowX: 'hidden',
                 },
             },

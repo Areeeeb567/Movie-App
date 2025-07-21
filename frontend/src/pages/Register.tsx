@@ -4,8 +4,10 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../assets/Register.css';
 import { registerUser } from '../services/api';
 
-
-// This component handles user registration
+/**
+ * Register component for user registration.
+ * @constructor
+ */
 const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');

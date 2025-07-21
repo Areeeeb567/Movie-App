@@ -22,7 +22,15 @@ export const API_ENDPOINTS = {
         NOW_PLAYING: `${API_BASE_URL}/movies/now_playing`,
         TOP_RATED: `${API_BASE_URL}/movies/top_rated`,
         POPULAR: `${API_BASE_URL}/movies/popular`,
-        DISCOVER: (sortBy: string = 'popularity.desc', page: number = 1) =>
-            `${API_BASE_URL}/movies/discover?sort_by=${encodeURIComponent(sortBy)}&page=${page}`,
+        GENRES: `${API_BASE_URL}/movies/genres`,
+        POSTER_IMAGE: `https://image.tmdb.org/t/p/w500`,
+        DISCOVER: (
+            sortBy: string = 'popularity.desc',
+            page: number = 1,
+            genres: number[] = []
+        ) =>
+            `${API_BASE_URL}/movies/discover?sort_by=${encodeURIComponent(sortBy)}&page=${page}${
+                genres.length > 0 ? `&with_genres=${genres.join(',')}` : ''
+            }`
     },
 };
