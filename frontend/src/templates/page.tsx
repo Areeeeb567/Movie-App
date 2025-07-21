@@ -7,6 +7,11 @@ type PageProps = {
     children?: React.ReactNode;
 };
 
+/**
+ * Page component that serves as a layout wrapper for the application.
+ * @param children
+ * @constructor
+ */
 const Page: React.FC<PageProps> = ({ children }) => {
     return (
         <>

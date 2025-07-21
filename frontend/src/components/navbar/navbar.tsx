@@ -6,19 +6,26 @@ import {
     Box,
     Stack,
 } from '@mui/material';
-
 import { useNavigate, useLocation } from 'react-router-dom';
-
 import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
 
 const drawerWidth = 72;
 
+/**
+ * Navigation items for the Navbar.
+ * Each item contains an icon, label, and route.
+ */
 const navItems = [
     { icon: <HomeIcon sx={{fontSize: 30}}/>, label: 'Home', route: '/' },
     { icon: <ExploreIcon sx={{fontSize: 30}} />, label: 'Discover', route: '/discover' },
 ];
 
+/**
+ * Navbar component that provides navigation links to Home and Discover pages.
+ * Uses Material-UI's Drawer for a sidebar layout.
+ * @constructor
+ */
 const Navbar: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
