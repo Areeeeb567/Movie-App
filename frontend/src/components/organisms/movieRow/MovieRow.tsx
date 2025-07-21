@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Skeleton } from '@mui/material';
+import { Box, Typography, Skeleton, Button } from '@mui/material';
 import MovieCard from '../../card/card';
 
 interface Movie {
@@ -8,20 +8,32 @@ interface Movie {
     poster_path: string;
 }
 
+interface MovieApiResponse {
+    page: number;
+    results: Movie[];
+    total_pages: number;
+    total_results: number;
+}
+
 interface MovieRowProps {
     title: string;
-    fetchFunction: () => Promise<{ results: Movie[] }>;
+    fetchFunction: (page: number) => Promise<MovieApiResponse>;
 }
 
 const MovieRow: React.FC<MovieRowProps> = ({ title, fetchFunction }) => {
     const [movies, setMovies] = useState<Movie[]>([]);
+    const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
+    const [loadingMore, setLoadingMore] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetchFunction();
+                const response = await fetchFunction(1);
                 setMovies(response.results || []);
+                setHasMore(response.page < response.total_pages);
+                setPage(2);
             } catch (err) {
                 console.error(`Failed to fetch movies for ${title}`, err);
             } finally {
@@ -31,6 +43,20 @@ const MovieRow: React.FC<MovieRowProps> = ({ title, fetchFunction }) => {
 
         fetchData();
     }, [fetchFunction, title]);
+
+    const handleLoadMore = async () => {
+        try {
+            setLoadingMore(true);
+            const response = await fetchFunction(page);
+            setMovies((prev) => [...prev, ...(response.results || [])]);
+            setHasMore(response.page < response.total_pages);
+            setPage((prev) => prev + 1);
+        } catch (err) {
+            console.error('Failed to load more movies', err);
+        } finally {
+            setLoadingMore(false);
+        }
+    };
 
     return (
         <Box sx={{ mb: 4 }}>
@@ -45,52 +71,61 @@ const MovieRow: React.FC<MovieRowProps> = ({ title, fetchFunction }) => {
                     px: 1,
                     pb: 1,
                     scrollBehavior: 'smooth',
-
-                    // Hide scrollbar cross-browser
-                    scrollbarWidth: 'none', // Firefox
-                    msOverflowStyle: 'none', // IE/Edge
-                    '&::-webkit-scrollbar': {
-                        display: 'none', // Chrome/Safari
-                    },
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                    '&::-webkit-scrollbar': { display: 'none' },
                 }}
             >
                 {loading
                     ? Array.from({ length: 6 }).map((_, index) => (
-                        <Box
-                            key={index}
-                            sx={{
-                                flex: '0 0 auto',
-                                width: 160,
-                            }}
-                        >
-                            <Skeleton
-                                variant="rectangular"
-                                width={160}
-                                height={240}
-                                sx={{ borderRadius: 2 }}
-                            />
-                            <Skeleton
-                                variant="text"
-                                width="100%"
-                                sx={{ mt: 1 }}
-                            />
+                        <Box key={index} sx={{ flex: '0 0 auto', width: 160 }}>
+                            <Skeleton variant="rectangular" width={160} height={240} sx={{ borderRadius: 2 }} />
+                            <Skeleton variant="text" width="100%" sx={{ mt: 1 }} />
                         </Box>
                     ))
-                    : movies.map((movie) => (
-                        <Box
-                            key={movie.id}
-                            sx={{
-                                flex: '0 0 auto',
-                                width: 160,
-                            }}
-                        >
-                            <MovieCard
-                                id={movie.id}
-                                title={movie.title}
-                                posterPath={movie.poster_path}
-                            />
-                        </Box>
-                    ))}
+                    : (
+                        <>
+                            {movies.map((movie) => (
+                                <Box key={movie.id} sx={{ flex: '0 0 auto', width: 160 }}>
+                                    <MovieCard
+                                        id={movie.id}
+                                        title={movie.title}
+                                        posterPath={movie.poster_path}
+                                    />
+                                </Box>
+                            ))}
+
+                            {hasMore && (
+                                <Box
+                                    sx={{
+                                        flex: '0 0 auto',
+                                        width: 160,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        paddingBottom: 7,
+                                        paddingRight: 4,
+                                    }}
+                                >
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleLoadMore}
+                                        disabled={loadingMore}
+                                        sx={{
+                                            width: '100%',
+                                            height: 40,
+                                            backgroundColor: 'secondary.light',
+                                            '&:hover': {
+                                                backgroundColor: 'primary.dark',
+                                            },
+                                        }}
+                                    >
+                                        {loadingMore ? 'Loading...' : 'Load More'}
+                                    </Button>
+                                </Box>
+                            )}
+                        </>
+                    )}
             </Box>
         </Box>
     );
