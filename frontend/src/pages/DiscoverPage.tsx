@@ -15,7 +15,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Page from '../templates/page';
 import MovieCard from '../components/card/card';
 import { getGenres, discoverMoviesByGenres } from '../services/movie';
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
+import LoadMoreButton from '../components/organisms/button/button';
 
 interface Genre {
     id: number;
@@ -156,26 +156,12 @@ const DiscoverPage: React.FC = () => {
                             </Grid>
 
                             {page < totalPages && (
-                                <Box sx={{ mt: 1, textAlign: 'center', mb: 10 }}>
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleLoadMore}
-                                        sx={{
-                                            width: 48,
-                                            height: 48,
-                                            borderRadius: '50%',
-                                            minWidth: 'auto',
-                                            backgroundColor: 'secondary.light',
-                                            opacity: 0.85,
-                                            '&:hover': {
-                                                backgroundColor: 'primary.dark',
-                                                opacity: 1,
-                                            },
-                                        }}
-                                    >
-                                        <KeyboardArrowDownOutlinedIcon />
-                                    </Button>
-                                </Box>
+                                    <Box sx={{ textAlign: 'center', mt: 4, mb: 8 }}>
+                                        <LoadMoreButton
+                                            direction="down"
+                                            onClick={handleLoadMore}
+                                        />
+                                    </Box>
                             )}
 
                         </>
