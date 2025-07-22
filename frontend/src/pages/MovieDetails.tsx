@@ -12,7 +12,7 @@ import {
 import Page from '../templates/page';
 import imdbLogo from '../assets/imdb.png';
 import {API_ENDPOINTS} from "../constants/apiUrls.ts";
-import type {MovieDetails} from '../types/types.ts';
+import type {MovieDetail} from '../types/types.ts';
 
 /**
  * MovieDetails component that fetches and displays details of a specific movie.
@@ -20,7 +20,7 @@ import type {MovieDetails} from '../types/types.ts';
  */
 const MovieDetails: React.FC = () => {
     const { movieId } = useParams<{ movieId: string }>();
-    const [movie, setMovie] = useState<MovieDetails | null>(null);
+    const [movie, setMovie] = useState<MovieDetail | null>(null);
 
     useEffect(() => {
         const fetchMovie = async () => {

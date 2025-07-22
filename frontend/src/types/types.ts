@@ -48,7 +48,8 @@ export interface MovieRowProps {
     title: string;
     fetchFunction: (page: number) => Promise<MovieApiResponse>;
 }
-=======
+
+/**
  * Interface for Movie Genre
  */
 export interface Genre {
@@ -68,7 +69,7 @@ export interface CastMember {
 /**
  * Interface for MovieDetails component props.
  */
-export interface MovieDetails {
+export interface MovieDetail {
     id: number;
     title: string;
     overview: string;
@@ -82,4 +83,11 @@ export interface MovieDetails {
     credits?: {
         cast: CastMember[];
     };
+}
+
+export interface LoadMoreButtonProps {
+    direction: 'down' | 'right';
+    onClick: () => void;
+    disabled?: boolean;
+    sx?: object;
 }
