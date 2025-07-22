@@ -48,7 +48,8 @@ export interface MovieRowProps {
     title: string;
     fetchFunction: (page: number) => Promise<MovieApiResponse>;
 }
-=======
+
+/**
  * Interface for Movie Genre
  */
 export interface Genre {
