@@ -3,14 +3,16 @@ import React from 'react';
 import { Button } from '@mui/material';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import type { LoadMoreButtonProps } from '../../../types/types';
 
-interface LoadMoreButtonProps {
-    direction: 'down' | 'right';
-    onClick: () => void;
-    disabled?: boolean;
-    sx?: object;
-}
-
+/**
+ * LoadMoreButton component that renders a button to load more items.
+ * @param direction
+ * @param onClick
+ * @param disabled
+ * @param sx
+ * @constructor
+ */
 const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({
    direction,
    onClick,

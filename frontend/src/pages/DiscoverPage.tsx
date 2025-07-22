@@ -16,18 +16,12 @@ import Page from '../templates/page';
 import MovieCard from '../components/card/card';
 import { getGenres, discoverMoviesByGenres } from '../services/movie';
 import LoadMoreButton from '../components/organisms/button/button';
+import type { Genre, Movie } from '../types/types';
 
-interface Genre {
-    id: number;
-    name: string;
-}
-
-interface Movie {
-    id: number;
-    title: string;
-    poster_path: string;
-}
-
+/**
+ * DiscoverPage component that allows users to discover movies by genre.
+ * @constructor
+ */
 const DiscoverPage: React.FC = () => {
     const [genres, setGenres] = useState<Genre[]>([]);
     const [selectedGenres, setSelectedGenres] = useState<number[]>([]);

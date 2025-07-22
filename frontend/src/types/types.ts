@@ -84,3 +84,10 @@ export interface MovieDetails {
         cast: CastMember[];
     };
 }
+
+export interface LoadMoreButtonProps {
+    direction: 'down' | 'right';
+    onClick: () => void;
+    disabled?: boolean;
+    sx?: object;
+}

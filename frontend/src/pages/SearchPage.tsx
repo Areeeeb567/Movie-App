@@ -14,6 +14,10 @@ import type { Movie } from '../types/types';
 
 const useQuery = () => new URLSearchParams(useLocation().search);
 
+/**
+ * SearchPage component that handles movie search functionality.
+ * @constructor
+ */
 const SearchPage: React.FC = () => {
     const query = useQuery().get('q') || '';
     const [results, setResults] = useState<Movie[]>([]);

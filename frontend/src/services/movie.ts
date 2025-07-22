@@ -50,6 +50,11 @@ export const getPopular = async (page: number = 1): Promise<any> => {
     return response.data;
 };
 
+/**
+ * Search for movies based on a query string.
+ * @param query
+ * @param page
+ */
 export const searchMovies = async (query: string, page: number = 1): Promise<any> => {
     const response = await axios.get(API_ENDPOINTS.MOVIES.SEARCH(query), {
         params: { page }
@@ -57,11 +62,19 @@ export const searchMovies = async (query: string, page: number = 1): Promise<any
     return response.data;
 }
 
+/**
+ * Fetch movie genres from the API.
+ */
 export const getGenres = async (): Promise<any[]> => {
     const response = await axios.get(API_ENDPOINTS.MOVIES.GENRES);
     return response.data;
 };
 
+/**
+ * Discover movies based on genres and sorting options.
+ * @param genreIds
+ * @param page
+ */
 export const discoverMoviesByGenres = async (
     genreIds: number[] = [],
     page: number = 1
