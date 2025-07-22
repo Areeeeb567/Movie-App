@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Skeleton, Button } from '@mui/material';
+import {Box, Typography, Skeleton, Button} from '@mui/material';
 import MovieCard from '../../card/card';
 import type {Movie, MovieRowProps} from "../../../types/types.ts";
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 
 /**
  * MovieRow component that displays a row of movie cards.
@@ -101,15 +102,18 @@ const MovieRow: React.FC<MovieRowProps> = ({ title, fetchFunction }) => {
                                         onClick={handleLoadMore}
                                         disabled={loadingMore}
                                         sx={{
-                                            width: '100%',
+                                            width: 40,
                                             height: 40,
+                                            borderRadius: '30%',
+                                            minWidth: 'auto',
                                             backgroundColor: 'secondary.light',
                                             '&:hover': {
                                                 backgroundColor: 'primary.dark',
+                                                opacity: 1,
                                             },
                                         }}
                                     >
-                                        {loadingMore ? 'Loading...' : 'Load More'}
+                                        <KeyboardArrowRightOutlinedIcon />
                                     </Button>
                                 </Box>
                             )}
