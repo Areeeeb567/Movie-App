@@ -67,6 +67,8 @@ export const discoverMoviesByGenres = async (
     page: number = 1
 ): Promise<any> => {
     const url = API_ENDPOINTS.MOVIES.DISCOVER('popularity.desc', page, genreIds);
+    console.log(url);
     const response = await axios.get(url);
+    console.log(response.data);
     return response.data;
 };

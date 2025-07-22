@@ -30,7 +30,7 @@ export const API_ENDPOINTS = {
             genres: number[] = []
         ) =>
             `${API_BASE_URL}/movies/discover?sort_by=${encodeURIComponent(sortBy)}&page=${page}${
-                genres.length > 0 ? `&with_genres=${genres.join(',')}` : ''
+                genres.length > 0 ? `&genres=${genres.join(',')}` : ''
             }`
     },
 };
