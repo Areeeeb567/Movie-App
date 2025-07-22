@@ -13,7 +13,7 @@ import {ERROR_MESSAGES, HTTP_STATUS, jsonResponse, sendErrorResponse} from "../c
  * @return Json response with trending movies or error message
  */
 export const getTrendingMovies = async (req: Request, res: Response): Promise<void> => {
-    const { page = 1} = req.query;
+    const { page = 1 } = req.query;
 
     try {
         const response = await axios.get(`${process.env.TMDB_BASE_URL}/trending/movie/week`, {
