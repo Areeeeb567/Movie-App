@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {Box, Typography, Skeleton} from '@mui/material';
+import {Box, Typography, Skeleton, Button} from '@mui/material';
 import MovieCard from '../../card/card';
 import type {Movie, MovieRowProps} from "../../../types/types.ts";
-import LoadMoreButton from '../button/button.tsx';
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 
 /**
  * MovieRow component that displays a row of movie cards.
@@ -86,13 +86,36 @@ const MovieRow: React.FC<MovieRowProps> = ({ title, fetchFunction }) => {
                             ))}
 
                             {hasMore && (
-                                    <Box sx={{ paddingRight: 4, paddingBottom: 7 }}>
-                                        <LoadMoreButton
-                                            direction="right"
-                                            onClick={handleLoadMore}
-                                            disabled={loadingMore}
-                                        />
-                                    </Box>
+                                <Box
+                                    sx={{
+                                        flex: '0 0 auto',
+                                        width: 160,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        paddingBottom: 7,
+                                        paddingRight: 4,
+                                    }}
+                                >
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleLoadMore}
+                                        disabled={loadingMore}
+                                        sx={{
+                                            width: 40,
+                                            height: 40,
+                                            borderRadius: '30%',
+                                            minWidth: 'auto',
+                                            backgroundColor: 'secondary.light',
+                                            '&:hover': {
+                                                backgroundColor: 'primary.dark',
+                                                opacity: 1,
+                                            },
+                                        }}
+                                    >
+                                        <KeyboardArrowRightOutlinedIcon />
+                                    </Button>
+                                </Box>
                             )}
                         </>
                     )}
