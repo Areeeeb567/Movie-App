@@ -69,7 +69,7 @@ export interface CastMember {
 /**
  * Interface for MovieDetails component props.
  */
-export interface MovieDetails {
+export interface MovieDetail {
     id: number;
     title: string;
     overview: string;

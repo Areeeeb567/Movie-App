@@ -3,7 +3,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import Register from './pages/Register';
-// import MovieDetails from './pages/MovieDetails';
+import MovieDetails from './pages/MovieDetails.tsx';
 // import HomePage from './pages/HomePage';
 import SearchPage from "./pages/SearchPage.tsx";
 import DiscoverPage from './pages/DiscoverPage';
@@ -14,7 +14,7 @@ const App = () => {
         <Routes>
             {/*Define the routes for the application, including public and protected routes*/}
             {/*<Route path="/" element={<HomePage />} />*/}
-            {/*<Route path="/movie/:movieId" element={<MovieDetails />} />*/}
+            <Route path="/movie/:movieId" element={<MovieDetails />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/" element={<DiscoverPage />} />
 
