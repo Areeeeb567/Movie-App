@@ -9,8 +9,8 @@ const HomePage: React.FC = () => {
     return (
         <Page>
             <MovieRow title="Trending Now" fetchFunction={getTrending} />
-            <MovieRow title="Popular Movies" fetchFunction={getPopular} />
             <MovieRow title="Top Rated" fetchFunction={getTopRated} />
+            <MovieRow title="Popular Movies" fetchFunction={getPopular} />
             <MovieRow title="Now Playing" fetchFunction={getNowPlaying} />
         </Page>
     );
