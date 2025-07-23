@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@typegoose/auto-increment": "4.13.0",
     "axios": "1.10.0",
     "bcrypt": "6.0.0",
     "cookie-parser": "1.4.7",
