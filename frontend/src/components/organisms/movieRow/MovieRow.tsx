@@ -86,7 +86,7 @@ const MovieRow: React.FC<MovieRowProps> = ({ title, fetchFunction }) => {
                             ))}
 
                             {hasMore && (
-                                    <Box sx={{ paddingRight: 4, paddingBottom: 7 }}>
+                                    <Box sx={{ paddingRight: 4, paddingBottom: 7, paddingTop: 12, }}>
                                         <LoadMoreButton
                                             direction="right"
                                             onClick={handleLoadMore}
