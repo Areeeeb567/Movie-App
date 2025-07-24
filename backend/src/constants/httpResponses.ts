@@ -26,6 +26,11 @@ export const ERROR_MESSAGES = {
     REGISTER_FAILED: 'Registration failed',
     ERROR_FETCHING_MOVIES: 'Error fetching movie details:',
     NO_QUERY: 'Query parameter is required and must be a string',
+    USER_NOT_FOUND: 'User not found',
+    ERROR_ADDING_FAVOURITE: 'Error adding to favourites',
+    ERROR_ADDING_WATCHED: 'Error adding to Watched list',
+    ERROR_REMOVING_FAVOURITE: 'Error removing favourite',
+    ERROR_REMOVING_WATCHED: 'Error removing from watched list',
 };
 
 /**

@@ -13,6 +13,7 @@ import protectedRoutes from './routes/protected';
 import { logger } from './config/logger';
 import { sendErrorResponse, HTTP_STATUS } from './constants/httpResponses';
 import movieRoutes from './routes/movie';
+import libraryRoutes from './routes/library';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/movies', movieRoutes);
 app.use('/api', protectedRoutes);
+app.use('/api/library', libraryRoutes);
 
 /**
  * * Basic route to check if the API is working
