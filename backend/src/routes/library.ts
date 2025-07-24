@@ -46,7 +46,7 @@ router.post('/remwatched', authMiddleware, removeWatched);
 
 router.get('/getfav/:userId', authMiddleware, getUserFavourites);
 
-router.get('/getwatched', authMiddleware, getUserWatchedList);
+router.get('/getwatched/:userId', authMiddleware, getUserWatchedList);
 
 
 export default router;

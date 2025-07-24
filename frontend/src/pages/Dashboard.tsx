@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import '../assets/Dashboard.css';
 import type {User} from '../types/types';
+import {getUserFavourites, getUserWatchedList} from "../services/library.ts";
 
 /**
  * Dashboard component that displays user information and allows logout.
@@ -19,9 +20,18 @@ const Dashboard = () => {
     useEffect(() => {
         // Check if the user is authenticated by verifying the token
         api.get('/dashboard')
-            .then(res => {
+            .then(async res => {
                 setMessage('Welcome to your dashboard!');
                 setUser(res.data);
+                localStorage.setItem('userId', res.data.userId);
+
+                const favouritesArray = await getUserFavourites(res.data.userId);
+                localStorage.setItem('favourites', JSON.stringify(favouritesArray));
+                const watchedList = await getUserWatchedList(res.data.userId);
+                localStorage.setItem('watchedList', JSON.stringify(watchedList));
+
+                // console.log("the array1: ", JSON.parse(localStorage.getItem('favourites') || '[]'));
+                // console.log("the array2: ", favouritesArray);
                 setLoading(false);
             })
             .catch(err => {
@@ -34,6 +44,8 @@ const Dashboard = () => {
     // Handle user logout by removing the token and redirecting to the login page
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('favourites');
         navigate('/login');
     };
 

@@ -35,10 +35,10 @@ export const API_ENDPOINTS = {
     },
     LIBRARY: {
         ADD_FAVOURITE: `${API_BASE_URL}/library/addfav`,
-        REMOVE_FAVOURITE: `${API_BASE_URL}/library/removefav`,
-        GET_FAVOURITES: (userId: number) => `${API_BASE_URL}/library/favourites/${userId}`,
-        GET_WATCHLIST: (userId: number) => `${API_BASE_URL}/library/watchlist/${userId}`,
-        ADD_TO_WATCHLIST: `${API_BASE_URL}/library/addwatchlist`,
-        REMOVE_FROM_WATCHLIST: `${API_BASE_URL}/library/removewatchlist`
+        REMOVE_FAVOURITE: `${API_BASE_URL}/library/remfav`,
+        GET_FAVOURITES: (userId: number) => `${API_BASE_URL}/library/getfav/${userId}`,
+        GET_WATCHLIST: (userId: number) => `${API_BASE_URL}/library/getwatched/${userId}`,
+        ADD_TO_WATCHLIST: `${API_BASE_URL}/library/addwatched`,
+        REMOVE_FROM_WATCHLIST: `${API_BASE_URL}/library/remwatched`,
     },
 };

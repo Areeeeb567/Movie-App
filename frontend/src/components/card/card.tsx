@@ -4,6 +4,8 @@ import {Box, Card, CardContent, CardMedia, Tooltip, Typography} from '@mui/mater
 import { useNavigate } from 'react-router-dom';
 import {API_ENDPOINTS} from "../../constants/apiUrls.ts";
 import type {MovieCardProps} from "../../types/types.ts";
+import FavouriteButton from "../organisms/button/addtofav.tsx";
+import WatchedButton from "../organisms/button/markasWatched.tsx";
 
 /**
  * MovieCard component that displays a movie card with title and poster.
@@ -44,7 +46,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, posterPath }) => {
                 />
             </Box>
 
-            <CardContent sx={{ textAlign: 'center', px: 1, py: 2 }}>
+            <CardContent sx={{ textAlign: 'center', px: 1, pt: 3 }}>
                 <Tooltip title={title}>
                     <Typography
                         variant="subtitle2"
@@ -54,6 +56,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, posterPath }) => {
                     </Typography>
                 </Tooltip>
             </CardContent>
+            <Box display="flex" justifyContent="left">
+                <FavouriteButton movieId={id} />
+                <WatchedButton movieId={id} />
+            </Box>
         </Card>
     );
 };
