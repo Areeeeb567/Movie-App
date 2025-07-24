@@ -24,6 +24,7 @@ export const API_ENDPOINTS = {
         POPULAR: `${API_BASE_URL}/movies/popular`,
         GENRES: `${API_BASE_URL}/movies/genres`,
         POSTER_IMAGE: `https://image.tmdb.org/t/p/w500`,
+
         DISCOVER: (
             sortBy: string = 'popularity.desc',
             page: number = 1,
