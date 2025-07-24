@@ -75,6 +75,7 @@ export interface MovieDetail {
     overview: string;
     release_date: string;
     backdrop_path: string;
+    poster_path: string;
     genres?: Genre[];
     runtime: number;
     vote_average: number;

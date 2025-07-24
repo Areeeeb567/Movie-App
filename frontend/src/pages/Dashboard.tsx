@@ -46,6 +46,7 @@ const Dashboard = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
         localStorage.removeItem('favourites');
+        localStorage.removeItem('watchedList');
         navigate('/login');
     };
 

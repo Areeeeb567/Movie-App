@@ -9,6 +9,7 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
 const drawerWidth = 72;
 
@@ -19,6 +20,7 @@ const drawerWidth = 72;
 const navItems = [
     { icon: <HomeIcon sx={{fontSize: 30}}/>, label: 'Home', route: '/' },
     { icon: <ExploreIcon sx={{fontSize: 30}} />, label: 'Discover', route: '/discover' },
+    { icon: <PointOfSaleIcon sx={{ fontSize: 30 }} />, label: 'Library', route: '/library' },
 ];
 
 /**

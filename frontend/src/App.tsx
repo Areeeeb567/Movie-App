@@ -7,6 +7,7 @@ import MovieDetails from './pages/MovieDetails.tsx';
 import HomePage from './pages/HomePage';
 import SearchPage from "./pages/SearchPage.tsx";
 import DiscoverPage from './pages/DiscoverPage';
+import LibraryPage from './pages/LibraryPage';
 
 // Main App component that defines the routes for the application
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="/movie/:movieId" element={<MovieDetails />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/discover" element={<DiscoverPage />} />
+            <Route path="/library" element={<LibraryPage />} />
 
             {/*<Route path="/" element={<Navigate to="/login" />} />*/}
             <Route path="/login" element={<Login />} />
