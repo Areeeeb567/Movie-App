@@ -108,9 +108,14 @@ export const getUserFavourites = async (req: Request, res: Response) => {
             return;
         }
 
-        const favourites = await Favourite.find({ userId: parseInt(userId) });
+        const favourites = await Favourite.find(
+            { userId: parseInt(userId) },
+            { _id: 0, movieId: 1 }
+        );
 
-        jsonResponse(res, favourites);
+        const movieIds = favourites.map(fav => fav.movieId);
+
+        jsonResponse(res, movieIds);
     } catch (err) {
         sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, 'Error fetching favorite movies');
     }

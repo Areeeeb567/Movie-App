@@ -24,7 +24,6 @@ export const API_ENDPOINTS = {
         POPULAR: `${API_BASE_URL}/movies/popular`,
         GENRES: `${API_BASE_URL}/movies/genres`,
         POSTER_IMAGE: `https://image.tmdb.org/t/p/w500`,
-
         DISCOVER: (
             sortBy: string = 'popularity.desc',
             page: number = 1,
@@ -33,5 +32,13 @@ export const API_ENDPOINTS = {
             `${API_BASE_URL}/movies/discover?sort_by=${encodeURIComponent(sortBy)}&page=${page}${
                 genres.length > 0 ? `&genres=${genres.join(',')}` : ''
             }`
+    },
+    LIBRARY: {
+        ADD_FAVOURITE: `${API_BASE_URL}/library/addfav`,
+        REMOVE_FAVOURITE: `${API_BASE_URL}/library/removefav`,
+        GET_FAVOURITES: (userId: number) => `${API_BASE_URL}/library/favourites/${userId}`,
+        GET_WATCHLIST: (userId: number) => `${API_BASE_URL}/library/watchlist/${userId}`,
+        ADD_TO_WATCHLIST: `${API_BASE_URL}/library/addwatchlist`,
+        REMOVE_FROM_WATCHLIST: `${API_BASE_URL}/library/removewatchlist`
     },
 };
