@@ -12,11 +12,14 @@ import Page from '../templates/page';
 import MovieCard from '../components/card/card';
 import { getMovieById } from '../services/movie';
 import type { MovieDetail } from '../types/types';
+import { Snackbar, Alert } from '@mui/material';
 
 const LibraryPage: React.FC = () => {
     const [tabIndex, setTabIndex] = useState(0);
     const [favouriteMovies, setFavouriteMovies] = useState<MovieDetail[]>([]);
     const [watchedMovies, setWatchedMovies] = useState<MovieDetail[]>([]);
+    const isLoggedIn = !!localStorage.getItem('token');
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
     const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
         setTabIndex(newValue);
@@ -24,7 +27,7 @@ const LibraryPage: React.FC = () => {
 
     const fetchMovies = async () => {
         const favIds = JSON.parse(localStorage.getItem('favourites') || '[]');
-        const watchedIds = JSON.parse(localStorage.getItem('watched') || '[]');
+        const watchedIds = JSON.parse(localStorage.getItem('watchedList') || '[]');
 
         try {
             const favs = await Promise.all(
@@ -41,7 +44,11 @@ const LibraryPage: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchMovies();
+        if (!isLoggedIn) {
+            setSnackbarOpen(true);
+        } else {
+            fetchMovies();
+        }
     }, []);
 
     return (
@@ -65,6 +72,18 @@ const LibraryPage: React.FC = () => {
                     <Tab label="Favourites" sx={{ textTransform: 'none' }} disableRipple />
                     <Tab label="Watched" sx={{ textTransform: 'none' }} disableRipple />
                 </Tabs>
+
+                <Snackbar
+                    open={snackbarOpen}
+                    autoHideDuration={4000}
+                    onClose={() => setSnackbarOpen(false)}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                >
+                    <Alert onClose={() => setSnackbarOpen(false)} severity="error" variant="filled">
+                        Please log in to use the library features.
+                    </Alert>
+                </Snackbar>
+
 
                 {tabIndex === 0 && (
                     favouriteMovies.length === 0 ? (

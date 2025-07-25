@@ -135,9 +135,14 @@ export const getUserWatchedList = async (req: Request, res: Response) => {
             return;
         }
 
-        const watchedList = await Watched.find({ userId: parseInt(userId) });
+        const watchedList = await Watched.find(
+            { userId: parseInt(userId) },
+            { _id: 0, movieId: 1 }
+        );
 
-        jsonResponse(res, watchedList);
+        const movieIds = watchedList.map(watch => watch.movieId);
+
+        jsonResponse(res, movieIds);
     } catch (err) {
         sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, 'Error fetching watched movies');
     }
