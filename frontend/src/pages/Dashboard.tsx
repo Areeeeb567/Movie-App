@@ -1,81 +1,126 @@
 // src/pages/Dashboard.tsx
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import {
+    Box,
+    Typography,
+    Tabs,
+    Tab,
+    Divider,
+    Paper,
+    Button, Snackbar, Alert,
+} from '@mui/material';
+import Page from '../templates/page';
 import api from '../services/api';
-import '../assets/Dashboard.css';
-import type {User} from '../types/types';
+import type { User } from '../types/types';
+import { useNavigate } from 'react-router-dom';
 
-/**
- * Dashboard component that displays user information and allows logout.
- * @constructor
- */
 const Dashboard = () => {
-    const [message, setMessage] = useState('');
+    const [tabIndex, setTabIndex] = useState(0);
     const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [errorOpen, setErrorOpen] = useState(false);
 
-    // Fetch user data from the backend when the component mounts
-    useEffect(() => {
-        // Check if the user is authenticated by verifying the token
-        api.get('/dashboard')
-            .then(res => {
-                setMessage('Welcome to your dashboard!');
-                setUser(res.data);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error(err);
-                setMessage('Unauthorized or error occurred');
-                setLoading(false);
-            });
-    }, []);
+    const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
+        setTabIndex(newValue);
+    };
 
-    // Handle user logout by removing the token and redirecting to the login page
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('favourites');
+        localStorage.removeItem('watchedList');
         navigate('/login');
     };
 
-    // If the data is still loading, show a loading message
-    if (loading) {
-        return (
-            <div className="dashboard-container">
-                <div className="dashboard-loading">Loading...</div>
-            </div>
-        );
-    }
+    useEffect(() => {
+        api.get('/dashboard')
+            .then(res => {
+                setUser(res.data);
+            })
+            .catch(() => {
+                setErrorOpen(true); // 👈 open snackbar
+            });
+    }, []);
 
-    // Render the dashboard with user information and a logout button
     return (
-        <div className="dashboard-container">
-            <div className="dashboard-card">
-                <h2 className="dashboard-title">Dashboard</h2>
-                <p className="dashboard-welcome">{message}</p>
+        <Page>
+            <Box sx={{ px: 3 }}>
+                <Typography variant="h4" sx={{ mt: 2, mb: 3 }}>
+                    Dashboard
+                </Typography>
 
-                {user && (
-                    <div className="user-info-container">
-                        <h3 className="user-info-title">User Information</h3>
-                        <div className="user-info-item">
-                            <span className="info-label">Username</span>
-                            <span className="info-value">{user.username}</span>
-                        </div>
-                        <div className="user-info-item">
-                            <span className="info-label">Email</span>
-                            <span className="info-value">{user.email}</span>
-                        </div>
-                        <div className="user-info-item">
-                            <span className="info-label">Phone</span>
-                            <span className="info-value">{user.phoneNumber}</span>
-                        </div>
-                    </div>
+                <Tabs
+                    value={tabIndex}
+                    onChange={handleTabChange}
+                    textColor="secondary"
+                    indicatorColor="secondary"
+                    sx={{
+                        mb: 4,
+                        '& .MuiTabs-indicator': { height: 3 },
+                        '& .MuiTab-root:focus': { outline: 'none' },
+                    }}
+                >
+                    <Tab label="Profile" sx={{ textTransform: 'none' }} disableRipple />
+                    <Tab label="Settings" sx={{ textTransform: 'none' }} disableRipple />
+                </Tabs>
+
+                {tabIndex === 0 && user && (
+                    <Paper elevation={2} sx={{ p: 3, maxWidth: 500 }}>
+                        <Typography variant="h6" gutterBottom>
+                            Profile Information
+                        </Typography>
+                        <Divider sx={{ mb: 2 }} />
+
+                        <Box sx={{ mb: 1 }}>
+                            <Typography variant="body2" color="text.secondary">
+                                Username
+                            </Typography>
+                            <Typography variant="body1">{user.username}</Typography>
+                        </Box>
+
+                        <Box sx={{ mb: 1 }}>
+                            <Typography variant="body2" color="text.secondary">
+                                Email
+                            </Typography>
+                            <Typography variant="body1">{user.email}</Typography>
+                        </Box>
+
+                        <Box>
+                            <Typography variant="body2" color="text.secondary">
+                                Phone Number
+                            </Typography>
+                            <Typography variant="body1">{user.phoneNumber}</Typography>
+                        </Box>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={handleLogout}
+                            sx={{ mt: 3, textTransform: 'none' }}
+                        >
+                            Sign Out
+                        </Button>
+                    </Paper>
+
                 )}
 
-                <button className="logout-button" onClick={handleLogout}>
-                    Sign Out
-                </button>
-            </div>
-        </div>
+                {tabIndex === 1 && (
+                    <Box>
+                        {/* Settings content will go here */}
+                    </Box>
+                )}
+            </Box>
+            <Snackbar
+                open={errorOpen}
+                autoHideDuration={4000}
+                onClose={() => setErrorOpen(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert severity="error" variant="filled" onClose={() => setErrorOpen(false)}>
+                    You must be logged in to access the dashboard.
+                </Alert>
+            </Snackbar>
+
+        </Page>
     );
 };
 

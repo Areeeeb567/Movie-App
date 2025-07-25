@@ -21,6 +21,15 @@ export default function AccountMenu() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleDashboard = () => {
+        navigate('/dashboard');
+    };
+
+    const handleSettings = () => {
+        navigate('/dashboard');
+    }
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
@@ -81,11 +90,11 @@ export default function AccountMenu() {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleDashboard}>
                     <Avatar /> Dashboard
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleSettings}>
                     <ListItemIcon>
                         <Settings fontSize="small" />
                     </ListItemIcon>
