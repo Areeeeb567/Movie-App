@@ -14,6 +14,10 @@ import { getMovieById } from '../services/movie';
 import type { MovieDetail } from '../types/types';
 import { Snackbar, Alert } from '@mui/material';
 
+/**
+ * LibraryPage component that displays the user's movie library.
+ * @constructor
+ */
 const LibraryPage: React.FC = () => {
     const [tabIndex, setTabIndex] = useState(0);
     const [favouriteMovies, setFavouriteMovies] = useState<MovieDetail[]>([]);

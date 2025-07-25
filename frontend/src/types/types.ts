@@ -92,3 +92,11 @@ export interface LoadMoreButtonProps {
     disabled?: boolean;
     sx?: object;
 }
+
+export interface FavouriteButtonProps {
+    movieId: number;
+}
+
+export interface WatchedButtonProps {
+    movieId: number;
+}

@@ -5,12 +5,14 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
-import { addToWatched, removeFromWatched } from '../../../services/library.ts'; // adjust path
+import { addToWatched, removeFromWatched } from '../../../services/library.ts';
+import type { WatchedButtonProps } from '../../../types/types.ts';
 
-interface WatchedButtonProps {
-    movieId: number;
-}
-
+/**
+ * WatchedButton component that allows users to toggle a movie as watched.
+ * @param movieId
+ * @constructor
+ */
 const WatchedButton: React.FC<WatchedButtonProps> = ({ movieId }) => {
     const [isWatched, setIsWatched] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);

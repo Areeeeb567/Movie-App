@@ -5,12 +5,14 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
-import { addToFavourites, removeFromFavourites } from '../../../services/library.ts'; // adjust path
+import { addToFavourites, removeFromFavourites } from '../../../services/library.ts';
+import type { FavouriteButtonProps } from '../../../types/types.ts';
 
-interface FavouriteButtonProps {
-    movieId: number;
-}
-
+/**
+ * FavouriteButton component that allows users to toggle a movie as favourite.
+ * @param movieId
+ * @constructor
+ */
 const FavouriteButton: React.FC<FavouriteButtonProps> = ({ movieId }) => {
     const [isFavourite, setIsFavourite] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
