@@ -1,5 +1,15 @@
 import express from 'express';
-import { getTopRatedMovies, getNowPlaying, getPopularMovies, searchMovies, getMovieDetails, discoverMovies, getGenres, getTrendingMovies } from '../controllers/tmdb';
+import {
+    getTopRatedMovies,
+    getNowPlaying,
+    getPopularMovies,
+    searchMovies,
+    getMovieDetails,
+    discoverMovies,
+    getGenres,
+    getTrendingMovies,
+    getTotalWatchTime
+} from '../controllers/tmdb';
 
 const router = express.Router();
 
@@ -59,5 +69,12 @@ router.get('/search', searchMovies);
  * @param {string} movieId - The ID of the movie to fetch details for
  */
 router.get('/:movieId', getMovieDetails);
+
+/**
+ * Route to get total watch time for a user
+ * @route POST /api/movies/total-watchtime
+ * @bodyParam {number} userId - The ID of the user to fetch total watch time for
+ */
+router.post('/total-watchtime', getTotalWatchTime);
 
 export default router;

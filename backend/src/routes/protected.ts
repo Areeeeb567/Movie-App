@@ -4,6 +4,7 @@ import authMiddleware from '../middleware/auth';
 import User from '../models/User';
 import {ERROR_MESSAGES, HTTP_STATUS, jsonResponse} from "../constants/httpResponses";
 import { sendResponse, sendErrorResponse } from '../constants/httpResponses';
+import {changePassword} from "../controllers/auth";
 
 const router = express.Router();
 
@@ -26,5 +27,11 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
         sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, ERROR_MESSAGES.SERVER_ERROR);
     }
 });
+
+/**
+ * Change password route
+ * Requires authentication
+ */
+router.post('/change-password', authMiddleware, changePassword);
 
 export default router;
