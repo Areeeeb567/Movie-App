@@ -10,11 +10,15 @@ import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import {useNavigate} from "react-router-dom";
+import {Alert, Snackbar} from "@mui/material";
 
 export default function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
+    const isLoggedIn = Boolean(localStorage.getItem('token'));
+    const [errorOpen, setErrorOpen] = React.useState(false);
+
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -23,11 +27,18 @@ export default function AccountMenu() {
     };
 
     const handleDashboard = () => {
-        navigate('/dashboard');
-    };
+        if (isLoggedIn) {
+            navigate('/dashboard');
+        } else {
+            setErrorOpen(true);
+        }    };
 
     const handleSettings = () => {
-        navigate('/dashboard');
+        if (isLoggedIn) {
+            navigate('/dashboard');
+        } else {
+            setErrorOpen(true);
+        }
     }
 
     const handleLogout = () => {
@@ -36,6 +47,14 @@ export default function AccountMenu() {
         localStorage.removeItem('favourites');
         localStorage.removeItem('watchedList');
         navigate('/login');
+    };
+
+    const handleLogin = () => {
+        if (!isLoggedIn) {
+            navigate('/login');
+        } else {
+            setErrorOpen(true);
+        }
     };
     return (
         <React.Fragment>
@@ -100,13 +119,35 @@ export default function AccountMenu() {
                     </ListItemIcon>
                     Settings
                 </MenuItem>
-                <MenuItem onClick={handleLogout}>
-                    <ListItemIcon>
-                        <Logout fontSize="small" />
-                    </ListItemIcon>
-                    Logout
-                </MenuItem>
+                {isLoggedIn ?
+                    (
+                        <MenuItem onClick={handleLogout}>
+                            <ListItemIcon>
+                                <Logout fontSize="small" />
+                            </ListItemIcon>
+                            Logout
+                        </MenuItem>
+                    ):
+                    (
+                        <MenuItem onClick={handleLogin}>
+                            <ListItemIcon>
+                                <Logout fontSize="small" />
+                            </ListItemIcon>
+                            Sign In
+                        </MenuItem>
+                    )
+                }
             </Menu>
+            <Snackbar
+                open={errorOpen}
+                autoHideDuration={4000}
+                onClose={() => setErrorOpen(false)}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert severity="error" variant="filled" onClose={() => setErrorOpen(false)}>
+                    You must be logged in to access this section.
+                </Alert>
+            </Snackbar>
         </React.Fragment>
     );
 }

@@ -7,7 +7,7 @@ import {
     Tab,
     Divider,
     Paper,
-    Button, Snackbar, Alert,
+    Button,
 } from '@mui/material';
 import Page from '../templates/page';
 import api from '../services/api';
@@ -18,7 +18,7 @@ const Dashboard = () => {
     const [tabIndex, setTabIndex] = useState(0);
     const [user, setUser] = useState<User | null>(null);
     const navigate = useNavigate();
-    const [errorOpen, setErrorOpen] = useState(false);
+    // const [errorOpen, setErrorOpen] = useState(false);
 
     const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
         setTabIndex(newValue);
@@ -37,8 +37,8 @@ const Dashboard = () => {
             .then(res => {
                 setUser(res.data);
             })
-            .catch(() => {
-                setErrorOpen(true); // 👈 open snackbar
+            .catch((err) => {
+                console.error(err);
             });
     }, []);
 
@@ -109,17 +109,6 @@ const Dashboard = () => {
                     </Box>
                 )}
             </Box>
-            <Snackbar
-                open={errorOpen}
-                autoHideDuration={4000}
-                onClose={() => setErrorOpen(false)}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            >
-                <Alert severity="error" variant="filled" onClose={() => setErrorOpen(false)}>
-                    You must be logged in to access the dashboard.
-                </Alert>
-            </Snackbar>
-
         </Page>
     );
 };
