@@ -100,3 +100,9 @@ export interface FavouriteButtonProps {
 export interface WatchedButtonProps {
     movieId: number;
 }
+
+export type MovieContextMenuProps = {
+    movieId: number;
+    anchorPosition: { mouseX: number; mouseY: number } | null;
+    onClose: () => void;
+};

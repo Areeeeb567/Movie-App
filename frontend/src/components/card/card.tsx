@@ -1,11 +1,12 @@
 // src/components/MovieCard.tsx
-import React from 'react';
+import React, {useState} from 'react';
 import {Box, Card, CardContent, CardMedia, Tooltip, Typography} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import {API_ENDPOINTS} from "../../constants/apiUrls.ts";
 import type {MovieCardProps} from "../../types/types.ts";
 import FavouriteButton from "../organisms/button/addtofav.tsx";
 import WatchedButton from "../organisms/button/markasWatched.tsx";
+import MovieContextMenu from '../menu/cardContextMenu.tsx';
 
 /**
  * MovieCard component that displays a movie card with title and poster.
@@ -16,9 +17,20 @@ import WatchedButton from "../organisms/button/markasWatched.tsx";
  */
 const MovieCard: React.FC<MovieCardProps> = ({ id, title, posterPath }) => {
     const navigate = useNavigate();
+    const [menuPosition, setMenuPosition] = useState<null | { mouseX: number; mouseY: number }>(null);
+
+    const handleContextMenu = (event: React.MouseEvent) => {
+        event.preventDefault();
+        setMenuPosition({ mouseX: event.clientX - 2, mouseY: event.clientY - 4 });
+    };
+
+    const handleClose = () => {
+        setMenuPosition(null);
+    };
 
     return (
-        <Card
+        <>
+            <Card
             elevation={0}
             sx={{
                 cursor: 'pointer',
@@ -28,6 +40,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, posterPath }) => {
                 background: 'transparent',
             }}
             onClick={() => navigate(`/movie/${id}`)}
+            onContextMenu={handleContextMenu}
         >
             <Box>
                 <CardMedia
@@ -42,11 +55,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, posterPath }) => {
                         '&:hover': {
                             transform: 'scale(1.05)',
                         },
-                    }}
-                />
+                    }}/>
             </Box>
 
-            <CardContent sx={{ textAlign: 'center', px: 1, pt: 3 }}>
+            <CardContent sx={{textAlign: 'center', px: 1, pt: 3}}>
                 <Tooltip title={title}>
                     <Typography
                         variant="subtitle2"
@@ -57,10 +69,17 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, posterPath }) => {
                 </Tooltip>
             </CardContent>
             <Box display="flex" justifyContent="left">
-                <FavouriteButton movieId={id} />
-                <WatchedButton movieId={id} />
+                <FavouriteButton movieId={id}/>
+                <WatchedButton movieId={id}/>
             </Box>
-        </Card>
+            </Card>
+            <MovieContextMenu
+                movieId={id}
+                anchorPosition={menuPosition}
+                onClose={handleClose}
+            />
+        </>
+
     );
 };
 
