@@ -8,11 +8,15 @@ import {
     Divider,
     Paper,
     Button,
+    RadioGroup,
+    FormControlLabel,
+    Radio,
 } from '@mui/material';
 import Page from '../templates/page';
 import api from '../services/api';
 import type { User } from '../types/types';
 import { useNavigate } from 'react-router-dom';
+import {createDynamicTheme, themePalettes} from "../assets/theming/theme.ts";
 
 const Dashboard = () => {
     const [tabIndex, setTabIndex] = useState(0);
@@ -41,6 +45,11 @@ const Dashboard = () => {
                 console.error(err);
             });
     }, []);
+
+    function handleClick(event: React.ChangeEvent<HTMLInputElement>) {
+        const selectedColor = event.target.value;
+        createDynamicTheme(themePalettes[selectedColor as keyof typeof themePalettes]);
+    }
 
     return (
         <Page>
@@ -106,6 +115,41 @@ const Dashboard = () => {
                 {tabIndex === 1 && (
                     <Box>
                         {/* Settings content will go here */}
+                        <Typography variant={'h6'}>Choose Theme</Typography>
+                        <RadioGroup defaultValue="purple" onChange={handleClick}>
+                            <FormControlLabel
+                                value="purple"
+                                control={
+                                    <Radio sx={{ color: '#7a5af5', '&.Mui-checked': { color: '#7a5af5' },}}/>
+                                }
+                                label="Purple"
+                            />
+                            <FormControlLabel
+                                value="crimson"
+                                control={
+                                    <Radio
+                                        sx={{
+                                            color: '#dc143c',
+                                            '&.Mui-checked': { color: '#dc143c' },
+                                        }}
+                                    />
+                                }
+                                label="Crimson"
+                            />
+                            <FormControlLabel
+                                value="blue"
+                                control={
+                                    <Radio
+                                        sx={{
+                                            color: '#1e90ff',
+                                            '&.Mui-checked': { color: '#1e90ff' },
+                                        }}
+                                    />
+                                }
+                                label="Blue"
+                            />
+                        </RadioGroup>
+
                     </Box>
                 )}
             </Box>
