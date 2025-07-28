@@ -31,6 +31,7 @@ export const ERROR_MESSAGES = {
     ERROR_ADDING_WATCHED: 'Error adding to Watched list',
     ERROR_REMOVING_FAVOURITE: 'Error removing favourite',
     ERROR_REMOVING_WATCHED: 'Error removing from watched list',
+    CREDENTIALS_UPDATED: 'Credentials updated successfully',
 };
 
 /**

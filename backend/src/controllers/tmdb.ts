@@ -201,3 +201,24 @@ export const getPopularMovies = async (req: Request, res: Response): Promise<voi
         sendErrorResponse(res, HTTP_STATUS.SERVER_ERROR, ERROR_MESSAGES.ERROR_FETCHING_MOVIES, false);
     }
 };
+
+/**
+ * Calculate the total watch time for a list of movies
+ * @param movieIds
+ */
+export const getTotalWatchTime = async (req: Request, res: Response) => {
+    const { movieIds } = req.body;
+
+    const runtimes = await Promise.all(
+        movieIds.map((id: any) =>
+            axios.get(`${process.env.TMDB_BASE_URL}/movie/${id}`, {
+                params: { api_key: process.env.TMDB_API_KEY, language: 'en-US'},
+            })
+                .then(response => response.data.runtime || 0)
+                .catch(() => 0) // Handle fetch failures gracefully
+        )
+    );
+
+    const totalWatchTime = runtimes.reduce((sum, runtime) => sum + runtime, 0);
+    jsonResponse(res, { totalWatchTime });
+}

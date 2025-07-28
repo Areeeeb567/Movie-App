@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt';
 import { generateAccessToken, generateRefreshToken } from '../utils/token';
 import {ERROR_MESSAGES, HTTP_STATUS} from "../constants/httpResponses";
 import { sendResponse, sendErrorResponse, jsonResponse } from '../constants/httpResponses';
+import { Request, Response } from 'express';
+import authMiddleware from "../middleware/auth";
 
 const router = express.Router();
 
@@ -46,11 +48,43 @@ router.post('/register', async (req, res) => {
     try {
         const user = new User({ username, email, phoneNumber, password });
         await user.save();
-        sendErrorResponse(res, HTTP_STATUS.REGISTERED, ERROR_MESSAGES.REGISTER_SUCCESSFUL);
+        sendErrorResponse(res, HTTP_STATUS.REGISTERED, ERROR_MESSAGES.REGISTER_SUCCESSFUL, true);
     } catch (error) {
         sendErrorResponse(res, HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.REGISTER_FAILED);
     }
 });
+
+/**
+ * Change password route
+ * @param req
+ * @param res
+ */
+export const changePassword = async (req: Request , res: Response ) => {
+    const { userId, oldPassword, newPassword } = req.body;
+
+    try {
+        const user = await User.findOne({userId});
+
+        if (!user) {
+            sendResponse(res, HTTP_STATUS.NOT_FOUND, ERROR_MESSAGES.INVALID_CREDENTIALS);
+            return;
+        }
+
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) {
+            sendResponse(res, HTTP_STATUS.UNAUTHORIZED, ERROR_MESSAGES.INVALID_CREDENTIALS);
+            return;
+        }
+
+        user.password = newPassword;
+        await user.save();
+
+        sendResponse(res, HTTP_STATUS.OK, ERROR_MESSAGES.CREDENTIALS_UPDATED, true);
+    } catch (err) {
+        sendResponse(res, HTTP_STATUS.SERVER_ERROR, ERROR_MESSAGES.SERVER_ERROR, false);
+        return;
+    }
+};
 
 export default router;
 
