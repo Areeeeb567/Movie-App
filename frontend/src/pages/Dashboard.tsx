@@ -10,10 +10,12 @@ import {
     Button,
     RadioGroup,
     FormControlLabel,
-    Radio,
+    Radio, Stack, TextField,
+    Snackbar,
+    Alert,
 } from '@mui/material';
 import Page from '../templates/page';
-import api from '../services/api';
+import api, { changePassword } from '../services/api';
 import type { User } from '../types/types';
 import { useNavigate } from 'react-router-dom';
 import {createDynamicTheme, themePalettes} from "../assets/theming/theme.ts";
@@ -50,6 +52,33 @@ const Dashboard = () => {
         const selectedColor = event.target.value;
         createDynamicTheme(themePalettes[selectedColor as keyof typeof themePalettes]);
     }
+
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
+
+    const handleChangePassword = async () => {
+        try {
+            const res = await changePassword(Number(localStorage.getItem('userId')), oldPassword, newPassword);
+            if (res.status === 200) {
+                setSnackbarMessage('Password updated successfully');
+                setSnackbarSeverity('success');
+                setSnackbarOpen(true);
+                setOldPassword('');
+                setNewPassword('');
+            }
+        } catch  {
+            setSnackbarMessage(
+                'Failed to update password'
+            );
+            setSnackbarSeverity('error');
+            setSnackbarOpen(true);
+        }
+
+    };
+
 
     return (
         <Page>
@@ -149,10 +178,60 @@ const Dashboard = () => {
                                 label="Blue"
                             />
                         </RadioGroup>
+                        <Divider orientation="horizontal" flexItem sx={{ paddingTop: 2 }} />
+
+                        <Typography variant="h6" sx={{ color: 'white', mt: 2 }}>
+                            Change Password
+                        </Typography>
+
+                        <Stack spacing={2} mt={2}>
+                            <TextField
+                                label="Old Password"
+                                type="password"
+                                value={oldPassword}
+                                onChange={(e) => setOldPassword(e.target.value)}
+                                InputLabelProps={{ style: { color: 'white' } }}
+                                InputProps={{ style: { color: 'white' } }}
+                                sx={{width: '30%'}}
+                            />
+                            <TextField
+                                label="New Password"
+                                type="password"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                InputLabelProps={{ style: { color: 'white' } }}
+                                InputProps={{ style: { color: 'white' } }}
+                                sx={{width: '30%'}}
+                            />
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={handleChangePassword}
+                                sx={{ alignSelf: 'flex-start' }}
+                            >
+                                Confirm Change
+                            </Button>
+                        </Stack>
 
                     </Box>
-                )}
+
+                    )}
             </Box>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={4000}
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    onClose={() => setSnackbarOpen(false)}
+                    severity={snackbarSeverity}
+                    sx={{ width: '100%' }}
+                >
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
+
         </Page>
     );
 };
