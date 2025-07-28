@@ -1,13 +1,16 @@
-// frontend/src/pages/Register.tsx
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import '../assets/Register.css';
+import {
+    Card,
+    Typography,
+    TextField,
+    Button,
+    Stack,
+    Alert,
+} from '@mui/material';
 import { registerUser } from '../services/api';
+import GuestButton from '../components/organisms/button/GuestButton';
 
-/**
- * Register component for user registration.
- * @constructor
- */
 const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -16,94 +19,119 @@ const Register = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // Function to handle form submission
     const handleSubmit = async (e: React.FormEvent) => {
-        // Prevent the default form submission behavior
         e.preventDefault();
         setError('');
 
-        // Validate input fields
         try {
             const res = await registerUser(username, email, phoneNumber, password);
-
-            // If the response is not ok, throw an error
             if (!res.ok) throw new Error('Registration failed');
-
-            // Navigate to the login page after successful registration
             navigate('/login');
         } catch (err: unknown) {
-            if (err instanceof Error) {
-                setError(err.message);
-            } else {
-                setError('An unexpected error occurred');
-            }
+            setError(err instanceof Error ? err.message : 'An unexpected error occurred');
         }
     };
 
-    // Render the registration form with username, email, phone number, and password fields
+    const handleGuestLogin = () => {
+        navigate('/');
+    };
+
     return (
-        <div className="register-container">
-            <div className="register-card">
-                <h2 className="register-title">Create Account</h2>
-                <p className="register-subtitle">Sign up to get started</p>
+        <Card
+            sx={{
+                p: 4,
+                maxWidth: 400,
+                width: '100%',
+                boxShadow: 6,
+                borderRadius: 4,
+                margin: 'auto',
+                bgcolor: 'transparent',
+                backdropFilter: 'blur(4px)',
+            }}
+        >
+            <Stack spacing={2}>
+                <Typography
+                    variant="h4"
+                    color="white"
+                    fontWeight={700}
+                    sx={{ paddingLeft: '10%' }}
+                >
+                    Create Account
+                </Typography>
+                <Typography
+                    variant="body1"
+                    color="white"
+                    sx={{ paddingLeft: '25%' }}
+                >
+                    Sign up to get started
+                </Typography>
 
-                {error && <div className="error-container">
-                    <p className="error-message">{error}</p>
-                </div>}
+                {error && <Alert severity="error">{error}</Alert>}
 
-                <form onSubmit={handleSubmit} className="register-form">
-                    <div className="input-group">
-                        <label className="input-label">Username</label>
-                        <input
+                <form onSubmit={handleSubmit}>
+                    <Stack spacing={2}>
+                        <TextField
+                            label="Username"
                             type="text"
                             value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            className="input-field"
+                            fullWidth
                             required
+                            onChange={(e) => setUsername(e.target.value)}
+                            InputLabelProps={{ style: { color: 'white' } }}
+                            InputProps={{ style: { color: 'white' } }}
                         />
-                    </div>
-
-                    <div className="input-group">
-                        <label className="input-label">Email</label>
-                        <input
+                        <TextField
+                            label="Email"
                             type="email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="input-field"
+                            fullWidth
                             required
+                            onChange={(e) => setEmail(e.target.value)}
+                            InputLabelProps={{ style: { color: 'white' } }}
+                            InputProps={{ style: { color: 'white' } }}
                         />
-                    </div>
-
-                    <div className="input-group">
-                        <label className="input-label">Phone Number</label>
-                        <input
+                        <TextField
+                            label="Phone Number"
                             type="tel"
                             value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
-                            className="input-field"
+                            fullWidth
                             required
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            InputLabelProps={{ style: { color: 'white' } }}
+                            InputProps={{ style: { color: 'white' } }}
                         />
-                    </div>
-
-                    <div className="input-group">
-                        <label className="input-label">Password</label>
-                        <input
+                        <TextField
+                            label="Password"
                             type="password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="input-field"
+                            fullWidth
                             required
+                            onChange={(e) => setPassword(e.target.value)}
+                            InputLabelProps={{ style: { color: 'white' } }}
+                            InputProps={{ style: { color: 'white' } }}
                         />
-                    </div>
-
-                    <button type="submit" className="register-button">Create Account</button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            fullWidth
+                            size="large"
+                        >
+                            Create Account
+                        </Button>
+                    </Stack>
                 </form>
 
-                <p className="register-footer">
-                    Already have an account? <Link to="/login" className="register-link">Sign In</Link>
-                </p>
-            </div>
-        </div>
+                <GuestButton onClick={handleGuestLogin} />
+
+                <Typography variant="body2" align="center" color="white">
+                    Already have an account?{' '}
+                    <Link to="/login" style={{ color: 'white', textDecoration: 'underline' }}>
+                        Sign In
+                    </Link>
+                </Typography>
+            </Stack>
+        </Card>
     );
 };
 

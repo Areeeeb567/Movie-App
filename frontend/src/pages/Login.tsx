@@ -1,96 +1,117 @@
-// frontend/src/pages/Login.tsx
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import '../assets/Login.css';
 import { loginUser } from '../services/api';
+import {
+    Card,
+    Typography,
+    TextField,
+    Button,
+    Stack,
+    Alert,
+} from '@mui/material';
+import GuestButton from '../components/organisms/button/GuestButton';
 
-
-/**
- * Login component for user authentication.
- * @constructor
- */
 const Login = () => {
-    /**
-     * State variables for email, password, and error message.
-     */
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    /**
-     * Handles the form submission for user login.
-     * @param e
-     */
     const handleSubmit = async (e: React.FormEvent) => {
-        // Prevent the default form submission behavior
         e.preventDefault();
         setError('');
 
-        // Validate email and password
         try {
             const res = await loginUser(email, password);
-
-            // If the response is not ok, throw an error
             if (!res.ok) throw new Error('Invalid email or password');
-
-            // Parse the response data and store the token in localStorage
             const data = await res.json();
             localStorage.setItem('token', data.token);
-
-            // Redirect to the dashboard after successful login
             navigate('/dashboard');
         } catch (err: unknown) {
-            if (err instanceof Error) {
-                setError(err.message);
-            } else {
-                setError('An unexpected error occurred');
-            }
+            setError(err instanceof Error ? err.message : 'An unexpected error occurred');
         }
     };
 
-    // Render the login form with email and password fields
+    const handleGuestLogin = () => {
+        navigate('/');
+    };
+
     return (
-        <div className="login-container">
-            <div className="login-card">
-                <h2 className="login-title">Welcome Back</h2>
-                <p className="login-subtitle">Sign in to continue</p>
+        <Card
+            sx={{
+                p: 4,
+                maxWidth: 400,
+                width: '100%',
+                boxShadow: 6,
+                borderRadius: 4,
+                margin: 'auto',
+                position: 'relative',
+                top: '10vh',
+            }}
+        >
+            <Stack spacing={2}>
+                <Typography
+                    variant="h4"
+                    color="white"
+                    fontWeight={700}
+                    sx={{ paddingLeft: '25%' }}
+                >
+                    Welcome
+                </Typography>
+                <Typography
+                    variant="body1"
+                    color="white"
+                    sx={{ paddingLeft: '25%' }}
+                >
+                    Sign in to continue
+                </Typography>
 
-                {error && <div className="error-container">
-                    <p className="error-message">{error}</p>
-                </div>}
+                {error && <Alert severity="error">{error}</Alert>}
 
-                <form onSubmit={handleSubmit} className="login-form">
-                    <div className="input-group">
-                        <label className="input-label">Email</label>
-                        <input
+                <form onSubmit={handleSubmit}>
+                    <Stack spacing={2}>
+                        <TextField
+                            label="Email"
                             type="email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="input-field"
+                            fullWidth
                             required
+                            onChange={(e) => setEmail(e.target.value)}
+                            InputLabelProps={{ style: { color: 'white' } }}
+                            InputProps={{ style: { color: 'white' } }}
                         />
-                    </div>
-
-                    <div className="input-group">
-                        <label className="input-label">Password</label>
-                        <input
+                        <TextField
+                            label="Password"
                             type="password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="input-field"
+                            fullWidth
                             required
+                            onChange={(e) => setPassword(e.target.value)}
+                            InputLabelProps={{ style: { color: 'white' } }}
+                            InputProps={{ style: { color: 'white' } }}
                         />
-                    </div>
-
-                    <button type="submit" className="login-button">Sign In</button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            fullWidth
+                            size="large"
+                        >
+                            Sign In
+                        </Button>
+                    </Stack>
                 </form>
 
-                <p className="login-footer">
-                    Don't have an account? <Link to="/register" className="login-link">Sign Up</Link>
-                </p>
-            </div>
-        </div>
+                <GuestButton onClick={handleGuestLogin} />
+
+                <Typography variant="body2" align="center" color="white">
+                    Don&apos;t have an account?{' '}
+                    <Link to="/register" style={{ color: 'white', textDecoration: 'underline' }}>
+                        Sign Up
+                    </Link>
+                </Typography>
+            </Stack>
+        </Card>
     );
 };
 
