@@ -11,7 +11,8 @@ export const API_BASE_URL = 'http://localhost:5000/api';
 export const API_ENDPOINTS = {
     AUTH: {
         LOGIN: `${API_BASE_URL}/auth/login`,
-        REGISTER: `${API_BASE_URL}/auth/register`
+        REGISTER: `${API_BASE_URL}/auth/register`,
+        CHANGE_PASSWORD: `${API_BASE_URL}/change-password`,
     },
     DASHBOARD: `${API_BASE_URL}/dashboard`,
     MOVIES: {
@@ -32,5 +33,13 @@ export const API_ENDPOINTS = {
             `${API_BASE_URL}/movies/discover?sort_by=${encodeURIComponent(sortBy)}&page=${page}${
                 genres.length > 0 ? `&genres=${genres.join(',')}` : ''
             }`
+    },
+    LIBRARY: {
+        ADD_FAVOURITE: `${API_BASE_URL}/library/addfav`,
+        REMOVE_FAVOURITE: `${API_BASE_URL}/library/remfav`,
+        GET_FAVOURITES: (userId: number) => `${API_BASE_URL}/library/getfav/${userId}`,
+        GET_WATCHLIST: (userId: number) => `${API_BASE_URL}/library/getwatched/${userId}`,
+        ADD_TO_WATCHLIST: `${API_BASE_URL}/library/addwatched`,
+        REMOVE_FROM_WATCHLIST: `${API_BASE_URL}/library/remwatched`,
     },
 };

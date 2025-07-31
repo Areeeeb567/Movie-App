@@ -75,6 +75,7 @@ export interface MovieDetail {
     overview: string;
     release_date: string;
     backdrop_path: string;
+    poster_path: string;
     genres?: Genre[];
     runtime: number;
     vote_average: number;
@@ -91,3 +92,17 @@ export interface LoadMoreButtonProps {
     disabled?: boolean;
     sx?: object;
 }
+
+export interface FavouriteButtonProps {
+    movieId: number;
+}
+
+export interface WatchedButtonProps {
+    movieId: number;
+}
+
+export type MovieContextMenuProps = {
+    movieId: number;
+    anchorPosition: { mouseX: number; mouseY: number } | null;
+    onClose: () => void;
+};

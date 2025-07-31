@@ -1,8 +1,12 @@
 import axios from 'axios';
 import {API_ENDPOINTS} from "../constants/apiUrls.ts";
-import type MovieDetails from '../pages/MovieDetails.tsx';
+import type { MovieDetail } from '../types/types.ts';
 
-export const getMovieById = async (movieId: string): Promise<MovieDetails> => {
+/**
+ * Fetch movie details by ID from the API.
+ * @param movieId
+ */
+export const getMovieById = async (movieId: string): Promise<MovieDetail> => {
     const response = await axios.get(API_ENDPOINTS.MOVIES.DETAILS(movieId));
     return response.data;
 };

@@ -30,23 +30,33 @@ router.post('/remfav', authMiddleware, removeFavourite);
 
 /**
  * Route to add a movie to watched list
- * @route POST /api/favourites/addfav
+ * @route POST /api/favourites/addwatched
  * @body {number} userId - The ID of the user
  * @body {number} movieId - The ID of the movie to add to favorites
  */
 router.post('/addwatched', authMiddleware, addToWatched);
 
 /**
- * Route to remove favorite
- * @route POST api/favourites/remfav
+ * Route to remove a movie from watched list
+ * @route POST api/favourites/remwatched
  * @body {number} userId - The ID of the user
  * @body {number} movieId - The ID of the movie to add to favorites
  */
 router.post('/remwatched', authMiddleware, removeWatched);
 
+/**
+ * Route to get user's favourites
+ * @route GET /api/favourites/getfav/:userId
+ * @param {number} userId - The ID of the user
+ */
 router.get('/getfav/:userId', authMiddleware, getUserFavourites);
 
-router.get('/getwatched', authMiddleware, getUserWatchedList);
+/**
+ * Route to get user's watched list
+ * @route GET /api/favourites/getwatched
+ * @param {number} userId - The ID of the user
+ */
+router.get('/getwatched/:userId', authMiddleware, getUserWatchedList);
 
 
 export default router;

@@ -63,7 +63,7 @@ const MovieDetails: React.FC = () => {
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         filter: 'blur(2px)',
-                        transform: 'scale(1.1)',
+                        // transform: 'scale(1.1)',
                         zIndex: 0,
                     }}
                 />

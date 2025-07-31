@@ -10,6 +10,7 @@ import {
 import MovieIcon from '@mui/icons-material/Movie';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTheme } from '@mui/material/styles';
+import AccountMenu from '../../menu/accountmenu';
 
 const Header: React.FC = () => {
     const theme = useTheme();
@@ -32,9 +33,11 @@ const Header: React.FC = () => {
                 backdropFilter: 'blur(4px)',
             }}
         >
-            <Toolbar sx={{ position: 'relative', height: '64px' }}>
-                <MovieIcon sx={{ fontSize: 35, color: 'white' , marginLeft: -0.7}} />
+            <Toolbar sx={{ position: 'relative', height: '64px', justifyContent: 'space-between' }}>
+                {/* Left icon */}
+                <MovieIcon sx={{ fontSize: 35, color: 'white', marginLeft: -0.7 }} />
 
+                {/* Centered search box */}
                 <Box
                     sx={{
                         position: 'absolute',
@@ -64,6 +67,11 @@ const Header: React.FC = () => {
                             },
                         }}
                     />
+                </Box>
+
+                {/* Right-aligned AccountMenu */}
+                <Box sx={{ display: 'flex', alignItems: 'center', ml: 'auto' }}>
+                    <AccountMenu />
                 </Box>
             </Toolbar>
         </AppBar>

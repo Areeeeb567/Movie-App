@@ -56,4 +56,17 @@ export async function registerUser(
     });
     return res;
 }
+
+export async function changePassword(
+    userId: number,
+    oldPassword: string,
+    newPassword: string
+) {
+    const res = await api.post(API_ENDPOINTS.AUTH.CHANGE_PASSWORD, {
+        userId,
+        oldPassword,
+        newPassword,
+    });
+    return res;
+}
 export default api;
