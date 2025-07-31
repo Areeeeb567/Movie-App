@@ -57,5 +57,5 @@ export const createDynamicTheme = (paletteConfig: typeof themePalettes.purple) =
         },
     });
 
-const defaultTheme = createDynamicTheme(themePalettes.purple);
+const defaultTheme = createDynamicTheme(themePalettes.crimson);
 export default defaultTheme;

@@ -19,6 +19,7 @@ import api, { changePassword } from '../services/api';
 import type { User } from '../types/types';
 import { useNavigate } from 'react-router-dom';
 import {createDynamicTheme, themePalettes} from "../assets/theming/theme.ts";
+import {getUserFavourites, getUserWatchedList} from "../services/library.ts";
 
 const Dashboard = () => {
     const [tabIndex, setTabIndex] = useState(0);
@@ -40,8 +41,15 @@ const Dashboard = () => {
 
     useEffect(() => {
         api.get('/dashboard')
-            .then(res => {
+            .then(async res => {
                 setUser(res.data);
+                setUser(res.data);
+                localStorage.setItem('userId', res.data.userId);
+
+                const favouritesArray = await getUserFavourites(res.data.userId);
+                localStorage.setItem('favourites', JSON.stringify(favouritesArray));
+                const watchedList = await getUserWatchedList(res.data.userId);
+                localStorage.setItem('watchedList', JSON.stringify(watchedList));
             })
             .catch((err) => {
                 console.error(err);
